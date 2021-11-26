@@ -1,0 +1,81 @@
+//**  jackpot content **//
+// enter
+.jackpot-content-transition-enter {
+  opacity: 0;
+}
+.jackpot-content-transition-enter-active {
+  opacity: 1;
+}
+
+// exit
+.jackpot-content-transition-exit {
+  opacity: 0.8;
+}
+.jackpot-content-transition-exit-active {
+  opacity: 0;
+}
+
+//**  jackpot animation **//
+// enter
+.jackpot-animation-transition-enter {
+  opacity: 0.1;
+  transform: scale(0.1);
+}
+.jackpot-animation-transition-enter-active {
+  opacity: 0.2;
+  transform: scale(1);
+}
+.jackpot-animation-transition-enter-done {
+  // transform: scale(1);
+  animation: fadeIn .7s;
+}
+
+// exit
+.jackpot-animation-transition-exit {
+  opacity: 1;
+}
+
+.jackpot-animation-transition-exit-active {
+  opacity: 0;
+}
+
+// transition timer
+.jackpot-animation-transition-enter-active,
+.jackpot-animation-transition-exit-active,
+.jackpot-content-transition-enter-active,
+.jackpot-content-transition-exit-active {
+  transition: all 500ms ease-out;
+}
+
+// @keyframes fadeOut {
+//   0% {
+//     opacity: 1;
+//   }
+
+//   100% {
+//     opacity: 0;
+//   }
+// }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0.2;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+// @keyframes crescendo {
+//   0% {
+//     transform: scale(0);
+//   }
+
+//   50% {
+//     transform: scale(0.5);
+//   }
+//   100% {
+//     transform: scale(1);
+//   }
+// }
