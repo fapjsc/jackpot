@@ -155,18 +155,18 @@ const FlipNumber = ({ level, size, count, styles }) => {
       fontSize = miniPoint
         ? '2rem'
         : largePoint
-        ? '6.5rem'
+        ? '6.3rem'
         : smallPoint
-        ? '2.6rem'
+        ? '2.5rem'
         : mediumPoint
-        ? '3rem'
+        ? '2.8rem'
         : bigPoint
-        ? '3.5rem'
-        : '4.2rem';
+        ? '3.3rem'
+        : '4rem';
       break;
 
     default:
-      fontSize = '4rem';
+      fontSize = '3.8rem';
   }
 
   return (

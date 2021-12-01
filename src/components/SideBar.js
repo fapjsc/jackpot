@@ -24,10 +24,11 @@ const SideBar = () => {
       );
     });
 
-  // const testEl = <FlipNumber size="side-bar" count={testCount} />;
-
   return (
     <div className={classes.sideBarContainer}>
+      <div className={classes.moneyBox}>
+        <div className={classes.moneyAnimation} />
+      </div>
       <section className={classes.flipNumberBox}>{jackpotEl}</section>
     </div>
   );
