@@ -4,7 +4,7 @@ import { connectWithSocket, testWinPrize } from './utils/socketConnection';
 
 const App = () => {
   useEffect(() => {
-    // connectWithSocket();
+    connectWithSocket();
     // testWinPrize();
   }, []);
   return <OverView />;

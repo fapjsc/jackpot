@@ -12,12 +12,16 @@ import { CSSTransition } from 'react-transition-group';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 
+import TestAnimation from '../components/TestAnimation';
+
+// import imgObj from '../assets/jackpot-tmp.png';
+
 // actions
 import {
   removeWinningData,
   setDisplayWinPrize,
   removeDisplayWinPrizeAnimation,
-  // updateDisplayWinPrize,
+  updateDisplayWinPrize,
 } from '../store/actions/jackpotActions';
 
 // Style
@@ -35,42 +39,50 @@ const OverView = () => {
   const { winningPrize, displayWinPrize } = useSelector(state => state.jackpot);
   const dispatch = useDispatch();
 
+  // 設定中獎播放動畫數據
   useEffect(() => {
-    console.log('test');
-    const existsItem = winningPrize?.find(el => el.id === displayWinPrize?.id);
-
-    if (existsItem?.cashInStatus !== displayWinPrize?.cashInStatus) {
-      if (displayWinPrize?.isPlayingAnimation === 'isPlaying') {
-        dispatch(setDisplayWinPrize('isPlaying'));
-        setWinPrize(false);
-      } else {
-        console.log('cash in fail');
-        dispatch(setDisplayWinPrize());
-      }
-    }
-
     if (winningPrize?.length > 0 && !displayWinPrize) {
-      console.log('set1');
       dispatch(setDisplayWinPrize());
     }
-
-    if (
-      displayWinPrize &&
-      displayWinPrize.id === winningPrize[0].id &&
-      displayWinPrize.isPlayingAnimation === 'notPlaying'
-    ) {
-      dispatch(setDisplayWinPrize('isPlaying'));
-      console.log('play');
-      setWinPrize(true);
-
-      setTimeout(() => {
-        if (displayWinPrize?.cashInStatus === 'success') {
-          console.log('play finishing');
-          setWinPrize(false);
-        }
-      }, 5000);
-    }
   }, [winningPrize, displayWinPrize, dispatch]);
+
+  // 判斷是否開始播放動畫
+  useEffect(() => {
+    if (displayWinPrize?.isPlayingAnimation === 'notPlaying') {
+      console.log('playing');
+      dispatch(setDisplayWinPrize('isPlaying'));
+      setWinPrize(true);
+    }
+  }, [displayWinPrize, dispatch]);
+
+  // 播放10秒後改變狀態
+  useEffect(() => {
+    if (displayWinPrize?.isPlayingAnimation === 'isPlaying') {
+      setTimeout(() => {
+        console.log('playing Finishing');
+        dispatch(setDisplayWinPrize('playingFinishing'));
+      }, 10000);
+    }
+  }, [displayWinPrize, dispatch]);
+
+  // server回傳狀態後更新
+  useEffect(() => {
+    if (winningPrize[0]?.id === displayWinPrize?.id) {
+      if (winningPrize[0]?.cashInStatus !== displayWinPrize?.cashInStatus) {
+        dispatch(updateDisplayWinPrize(winningPrize[0]?.cashInStatus));
+      }
+    }
+  }, [dispatch, winningPrize, displayWinPrize]);
+
+  // 結束動畫
+  useEffect(() => {
+    if (
+      displayWinPrize?.cashInStatus === 'success' &&
+      displayWinPrize?.isPlayingAnimation === 'playingFinishing'
+    ) {
+      setWinPrize(false);
+    }
+  }, [displayWinPrize]);
 
   return (
     <div className={classes.container}>
@@ -79,10 +91,10 @@ const OverView = () => {
         <WinningRecord />
       </div>
 
-      <div style={{ flex: '0.7', backgroundColor: '#ff7875' }}>
+      <div style={{ flex: '0.7', backgroundColor: 'rgba(0,0,0,.8)' }}>
         <CSSTransition
-          in={winPrize && displayWinPrize}
-          timeout={300}
+          in={winPrize}
+          timeout={1000}
           classNames="jackpot-animation-transition"
           mountOnEnter
           unmountOnExit

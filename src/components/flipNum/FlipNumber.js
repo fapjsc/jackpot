@@ -7,9 +7,8 @@ import { useMediaQuery } from 'react-responsive';
 import useOdometer from '../../hooks/useOdometer';
 import '../../sass/odometer.scss';
 
-const FlipNumber = ({ level, size, count }) => {
+const FlipNumber = ({ level, size, count, styles }) => {
   const targetRef = React.useRef(null);
-
   // Media Query
   const bigPoint = useMediaQuery({
     query: '(max-width: 1440px)',
@@ -31,18 +30,28 @@ const FlipNumber = ({ level, size, count }) => {
     query: '(max-width: 900px)',
   });
 
-  // console.log(bigPoint, 'big');
-  // console.log(mediumPoint, 'medium');
-  // console.log(smallPoint, 'small');
-  // console.log(largePoint, 'large');
-  // console.log(miniPoint, 'miniPoint');
+  // mediumPoint
+  //   ? console.log(mediumPoint, 'medium')
+  //   : bigPoint
+  //   ? console.log(bigPoint, 'big')
+  //   : smallPoint
+  //   ? console.log(smallPoint, 'small')
+  //   : largePoint
+  //   ? console.log(largePoint, 'large')
+  //   : miniPoint
+  //   ? console.log(miniPoint, 'miniPoint')
+  //   : console.log('default');
 
   const odometerOptions = {
     duration: 300,
     format: '(,ddd).dddd',
   };
 
-  useOdometer(targetRef, count.toFixed(4) * 1 + 0.0001, odometerOptions);
+  useOdometer(
+    targetRef,
+    Number(count).toFixed(4) * 1 + 0.0001,
+    odometerOptions
+  );
 
   let color;
   let fontSize;
@@ -51,6 +60,7 @@ const FlipNumber = ({ level, size, count }) => {
     case 'jackpot':
       color = '#F70E06';
       break;
+
     case 'secondPrize':
       color = '#E93EEE';
       break;
@@ -63,6 +73,22 @@ const FlipNumber = ({ level, size, count }) => {
       color = '#39E743';
       break;
 
+    case 'level1':
+      color = '#F70E06';
+      break;
+
+    case 'level2':
+      color = '#E93EEE';
+      break;
+
+    case 'level3':
+      color = '#3881E0';
+      break;
+
+    case 'level4':
+      color = '#39E743';
+      break;
+
     default:
       color = '#F2F3F4';
   }
@@ -70,56 +96,61 @@ const FlipNumber = ({ level, size, count }) => {
   switch (size) {
     case 'jackpot':
       fontSize = miniPoint
-        ? '6rem'
+        ? '6em'
         : largePoint
-        ? '19rem'
+        ? '15em'
         : smallPoint
-        ? '7.5rem'
+        ? '6.5em'
         : mediumPoint
-        ? '7.8rem'
+        ? '7.5em'
         : bigPoint
-        ? '8.3rem'
-        : '10rem';
+        ? '8em'
+        : '10em';
       break;
 
     case 'secondPrize':
       fontSize = miniPoint
-        ? '5.5rem'
+        ? '5em'
         : largePoint
-        ? '15rem'
+        ? '14em'
         : smallPoint
-        ? '7rem'
+        ? '5.5em'
         : mediumPoint
-        ? '7.8rem'
+        ? '6.5em'
         : bigPoint
-        ? '8.3rem'
-        : '9.5rem';
+        ? '7em'
+        : '8.5em';
       break;
 
     case 'thirdPrize':
       fontSize = miniPoint
-        ? '4rem'
+        ? '3.8em'
         : largePoint
-        ? '9rem'
+        ? '9em'
         : smallPoint
-        ? '4.5rem'
+        ? '4em'
         : mediumPoint
-        ? '5.5rem'
-        : '6rem';
+        ? '4.3em'
+        : bigPoint
+        ? '4.8em'
+        : '6em';
       break;
 
     case 'fourthPrize':
       fontSize = miniPoint
-        ? '4rem'
+        ? '3.8em'
         : largePoint
-        ? '9rem'
+        ? '9em'
         : smallPoint
-        ? '4.5rem'
+        ? '4em'
         : mediumPoint
-        ? '5.5rem'
-        : '6rem';
+        ? '4.3em'
+        : bigPoint
+        ? '4.8em'
+        : '6em';
       break;
 
+    //=== Side bar ===//
     case 'side-bar':
       fontSize = miniPoint
         ? '2rem'
@@ -139,9 +170,16 @@ const FlipNumber = ({ level, size, count }) => {
   }
 
   return (
-    <div>
-      <p className="target" ref={targetRef} style={{ color, fontSize }} />
-    </div>
+    <p
+      className="target"
+      ref={targetRef}
+      style={{
+        color,
+        fontSize,
+        ...styles,
+        lineHeight: 0.9,
+      }}
+    />
   );
 };
 

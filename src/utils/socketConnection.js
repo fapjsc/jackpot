@@ -8,11 +8,9 @@ import store from '../store/store';
 import {
   setJackpotData,
   setWinningPrizeData,
-  // removeWinningData,
-  // setHistory,
 } from '../store/actions/jackpotActions';
 
-const SERVER = 'http://192.168.10.102:3030';
+const SERVER = 'http://192.168.10.200:3030';
 
 let socket;
 
@@ -27,11 +25,15 @@ export const connectWithSocket = () => {
   });
 
   socket.on('jackpot', jackpotData => {
-    console.log('get jackpot data');
+    // console.log('get jackpot data');
     if (JSON.stringify(jackpotData) === tmp) return;
 
     tmp = JSON.stringify(jackpotData);
     store.dispatch(setJackpotData(jackpotData));
+  });
+
+  socket.on('jackpotWinRecord', data => {
+    // console.log(data);
   });
 
   socket.on('win-prize', winPrizeData => {
@@ -44,11 +46,11 @@ export const connectWithSocket = () => {
     // store.dispatch(setHistory(winPrizeData));
 
     if (winPrizeData.cashInStatus === 'pending') {
-      console.log('🔥 中獎了！！', winPrizeData);
+      // console.log('🔥 中獎了！！', winPrizeData);
     }
 
     if (winPrizeData.cashInStatus === 'success') {
-      console.log('👉 已入帳！！', winPrizeData);
+      // console.log('👉 已入帳！！', winPrizeData);
     }
 
     if (winPrizeData.cashInStatus === 'fail') {
@@ -65,19 +67,28 @@ export const connectWithSocket = () => {
   // })
 };
 
+// ==== 測試播放動畫邏輯用 ==== //
 let arr = ['success', 'fail'];
+let levelArr = [
+  'jackpot',
+  'secondPrize',
+  'thirdPrize',
+  'fourPrize',
+  'fifthPrize',
+  'sixthPrize',
+];
 
 export const testWinPrize = () => {
-  console.log('hi');
   setInterval(() => {
     const num = randomNum(1, 2);
     store.dispatch(
       setWinningPrizeData({
         ip: '192.168.10.99',
-        amountWinning: 100.12,
+        amountWinning: 100.12902942,
         id: uuidv4(),
         level: 'level6',
-        cashInStatus: arr[num] || 'success',
+        cashInStatus: arr[1] || 'success',
+        // cashInStatus: 'success',
       })
     );
   }, 10000);

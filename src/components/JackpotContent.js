@@ -7,10 +7,12 @@ import { useSelector } from 'react-redux';
 // Style
 import classes from './JackpotContent.module.scss';
 
+// React responsive
+// import { useMediaQuery } from 'react-responsive';
+
 const JackpotContent = () => {
   // Redux
   const { jackpotData } = useSelector(state => state.jackpot);
-  // console.log(jackpotData);
 
   const jackpotEl =
     jackpotData &&
@@ -20,16 +22,27 @@ const JackpotContent = () => {
       const { jackpot, level } = jackpotData[key];
       return (
         <div key={index} className={classes[level]}>
-          <FlipNumber
-            level={level}
-            size={level}
-            count={Math.floor(jackpot * 100) / 100}
-          />
+          <div>
+            <img
+              src={
+                require(`../assets/overView/${level}.gif`).default
+                  ? require(`../assets/overView/${level}.gif`).default
+                  : null
+              }
+              alt={`level-${level}`}
+              style={{ width: '10rem' }}
+            />
+            <FlipNumber level={level} size={level} count={jackpot} content />
+          </div>
         </div>
       );
     });
 
-  return <div className={classes.container}>{jackpotEl}</div>;
+  return (
+    <div className={classes.container}>
+      <div className={classes.box}>{jackpotEl}</div>
+    </div>
+  );
 };
 
 export default JackpotContent;

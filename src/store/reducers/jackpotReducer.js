@@ -1,10 +1,11 @@
 import {
   SET_JACKPOT_DATA,
   SET_WINNING_PRIZE,
-  WINNING_PRIZE_CASH_IN_SUCCESS,
+  REMOVE_WIN_PRIZE_FROM_LIST,
   SET_WIN_PRIZE_HISTORY,
   DISPLAY_WINNING_ANIMATION,
   REMOVE_DISPLAY_WINNING_ANIMATION,
+  UPDATE_DISPLAY_WIN_PRIZE,
   // UPDATE_DISPLAY_WIN_PRIZE,
 } from '../types';
 
@@ -44,7 +45,7 @@ export const jackpotReducer = (state = initialState, action) => {
         };
       }
 
-    case WINNING_PRIZE_CASH_IN_SUCCESS:
+    case REMOVE_WIN_PRIZE_FROM_LIST:
       return {
         ...state,
         winningPrize: state.winningPrize.filter(
@@ -52,25 +53,25 @@ export const jackpotReducer = (state = initialState, action) => {
         ),
       };
 
-    case SET_WIN_PRIZE_HISTORY:
-      const prizeItem = { ...action.winPrizeData };
-      const prizeExistsItem = state.history.find(
-        el => el.id === action.winPrizeData.id
-      );
+    // case SET_WIN_PRIZE_HISTORY:
+    //   const prizeItem = { ...action.winPrizeData };
+    //   const prizeExistsItem = state.history.find(
+    //     el => el.id === action.winPrizeData.id
+    //   );
 
-      if (prizeExistsItem) {
-        return {
-          ...state,
-          history: state.history.map(el =>
-            el.id === action.winPrizeData.id ? prizeItem : el
-          ),
-        };
-      } else {
-        return {
-          ...state,
-          history: [...state.history, prizeItem],
-        };
-      }
+    //   if (prizeExistsItem) {
+    //     return {
+    //       ...state,
+    //       history: state.history.map(el =>
+    //         el.id === action.winPrizeData.id ? prizeItem : el
+    //       ),
+    //     };
+    //   } else {
+    //     return {
+    //       ...state,
+    //       history: [...state.history, prizeItem],
+    //     };
+    //   }
 
     case DISPLAY_WINNING_ANIMATION:
       return {
@@ -83,14 +84,14 @@ export const jackpotReducer = (state = initialState, action) => {
           : null,
       };
 
-    // case UPDATE_DISPLAY_WIN_PRIZE:
-    //   return {
-    //     ...state,
-    //     displayWinPrize: {
-    //       ...state.displayWinPrize,
-    //       cashInStatus: action.cashInStatus,
-    //     },
-    //   };
+    case UPDATE_DISPLAY_WIN_PRIZE:
+      return {
+        ...state,
+        displayWinPrize: {
+          ...state.displayWinPrize,
+          cashInStatus: action.cashInStatus,
+        },
+      };
 
     case REMOVE_DISPLAY_WINNING_ANIMATION:
       return {

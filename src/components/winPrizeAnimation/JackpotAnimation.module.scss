@@ -1,0 +1,91 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-image: url(../../assets/content-bg.jpg);
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+
+  .animationBox {
+    width: 95%;
+    height: 95%;
+    background-position: center;
+    background-size: 110%;
+    background-repeat: no-repeat;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    position: relative;
+  }
+
+  .animationBox[level='jackpot'] {
+    background-image: url(../../assets/winPrizeAnimation/jackpot.gif);
+  }
+
+  .animationBox[level='secondPrize'] {
+    background-image: url(../../assets/winPrizeAnimation//secondPrize.gif);
+  }
+
+  .animationBox[level='thirdPrize'] {
+    background-image: url(../../assets/winPrizeAnimation/thirdPrize.gif);
+  }
+
+  .animationBox[level='fourthPrize'] {
+    background-image: url(../../assets/winPrizeAnimation/fourthPrize.gif);
+  }
+
+  .animationBox[level='fifthPrize'] {
+    background-image: url(../../assets/winPrizeAnimation/otherPrize.gif);
+  }
+
+  .animationBox[level='sixthPrize'] {
+    background-image: url(../../assets/winPrizeAnimation/otherPrize.gif);
+  }
+
+  .winNumberBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(102, 88, 6, 0.3);
+    border-radius: 10px;
+    max-width: 100%;
+
+    position: absolute;
+    top: 58%;
+
+    span {
+      font-size: 10rem;
+      color: #f2f3f4;
+    }
+
+    span[level='level1'] {
+      color: #f70e06;
+    }
+
+    span[level='level2'] {
+      color: #e93eee;
+    }
+
+    span[level='level3'] {
+      color: #3881e0;
+    }
+
+    span[level='level4'] {
+      color: #39e743;
+    }
+
+    // span[level='level5'] {
+    //   color: #f2f3f4;
+    // }
+
+    // span[level='level6'] {
+    //   color: #f2f3f4;
+    // }
+  }
+}

@@ -1,10 +1,11 @@
 import {
   SET_JACKPOT_DATA,
   SET_WINNING_PRIZE,
-  WINNING_PRIZE_CASH_IN_SUCCESS,
   SET_WIN_PRIZE_HISTORY,
   DISPLAY_WINNING_ANIMATION,
   REMOVE_DISPLAY_WINNING_ANIMATION,
+  REMOVE_WIN_PRIZE_FROM_LIST,
+  UPDATE_DISPLAY_WIN_PRIZE,
   // UPDATE_DISPLAY_WIN_PRIZE,
 } from '../types';
 
@@ -24,7 +25,7 @@ export const setWinningPrizeData = winningPrizeData => {
 
 export const removeWinningData = winningPrizeData => {
   return {
-    type: WINNING_PRIZE_CASH_IN_SUCCESS,
+    type: REMOVE_WIN_PRIZE_FROM_LIST,
     winningPrizeData,
   };
 };
@@ -49,9 +50,9 @@ export const removeDisplayWinPrizeAnimation = () => {
   };
 };
 
-// export const updateDisplayWinPrize = cashInStatus => {
-//   return {
-//     type: UPDATE_DISPLAY_WIN_PRIZE,
-//     cashInStatus,
-//   };
-// };
+export const updateDisplayWinPrize = cashInStatus => {
+  return {
+    type: UPDATE_DISPLAY_WIN_PRIZE,
+    cashInStatus,
+  };
+};
