@@ -12,10 +12,6 @@ import { CSSTransition } from 'react-transition-group';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 
-import TestAnimation from '../components/TestAnimation';
-
-// import imgObj from '../assets/jackpot-tmp.png';
-
 // actions
 import {
   removeWinningData,
@@ -32,8 +28,6 @@ import '../sass/reactTransition.scss';
 const OverView = () => {
   const [winPrize, setWinPrize] = useState(false);
   const [showOverView, setShowOverView] = useState(true);
-
-  // const [playAnimationItem, setPlayAnimationItem] = useState();
 
   // Redux
   const { winningPrize, displayWinPrize } = useSelector(state => state.jackpot);
@@ -65,7 +59,7 @@ const OverView = () => {
     }
   }, [displayWinPrize, dispatch]);
 
-  // server回傳狀態後更新
+  // server回傳狀態後更新cashInStatus
   useEffect(() => {
     if (winningPrize[0]?.id === displayWinPrize?.id) {
       if (winningPrize[0]?.cashInStatus !== displayWinPrize?.cashInStatus) {
@@ -91,7 +85,7 @@ const OverView = () => {
         <WinningRecord />
       </div>
 
-      <div style={{ flex: '0.7', backgroundColor: 'rgba(0,0,0,.8)' }}>
+      <div style={{ flex: '0.7', backgroundColor: 'rgba(0,0,0,.6)' }}>
         <CSSTransition
           in={winPrize}
           timeout={1000}

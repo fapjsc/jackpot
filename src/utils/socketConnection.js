@@ -8,6 +8,7 @@ import store from '../store/store';
 import {
   setJackpotData,
   setWinningPrizeData,
+  setHistory,
 } from '../store/actions/jackpotActions';
 
 const SERVER = 'http://192.168.10.200:3030';
@@ -43,7 +44,7 @@ export const connectWithSocket = () => {
         amountWinning: winPrizeData.amountWinning.toFixed(2),
       })
     );
-    // store.dispatch(setHistory(winPrizeData));
+    store.dispatch(setHistory(winPrizeData));
 
     if (winPrizeData.cashInStatus === 'pending') {
       // console.log('🔥 中獎了！！', winPrizeData);

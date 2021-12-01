@@ -53,25 +53,25 @@ export const jackpotReducer = (state = initialState, action) => {
         ),
       };
 
-    // case SET_WIN_PRIZE_HISTORY:
-    //   const prizeItem = { ...action.winPrizeData };
-    //   const prizeExistsItem = state.history.find(
-    //     el => el.id === action.winPrizeData.id
-    //   );
+    case SET_WIN_PRIZE_HISTORY:
+      const prizeItem = { ...action.winPrizeData };
+      const prizeExistsItem = state.history.find(
+        el => el.id === action.winPrizeData.id
+      );
 
-    //   if (prizeExistsItem) {
-    //     return {
-    //       ...state,
-    //       history: state.history.map(el =>
-    //         el.id === action.winPrizeData.id ? prizeItem : el
-    //       ),
-    //     };
-    //   } else {
-    //     return {
-    //       ...state,
-    //       history: [...state.history, prizeItem],
-    //     };
-    //   }
+      if (prizeExistsItem) {
+        return {
+          ...state,
+          history: state.history.map(el =>
+            el.id === action.winPrizeData.id ? prizeItem : el
+          ),
+        };
+      } else {
+        return {
+          ...state,
+          history: [...state.history, prizeItem],
+        };
+      }
 
     case DISPLAY_WINNING_ANIMATION:
       return {

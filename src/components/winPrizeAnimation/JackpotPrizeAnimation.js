@@ -5,8 +5,6 @@ import { useDispatch } from 'react-redux';
 // actions
 import { setWinningPrizeData } from '../../store/actions/jackpotActions';
 
-// import imgObj from '../../assets/winPrize/secondPrize.png';
-
 import FlipNumber from '../flipNum/FlipNumber';
 
 // Styles
