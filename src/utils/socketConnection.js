@@ -15,7 +15,7 @@ import {
 // Api
 import { getWinRecordList } from './api';
 
-const SERVER = 'http://192.168.10.200:3030';
+const SERVER = 'http://192.168.10.119:3030';
 
 let socket;
 
