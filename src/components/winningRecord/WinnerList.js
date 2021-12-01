@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react';
+
+// React Spring
 import { useTransition, animated } from 'react-spring';
-// import shuffle from 'lodash/shuffle';
 
+// Styles
 import classes from './WinnerList.module.scss';
-// import { devToolsEnhancer } from 'redux-devtools-extension';
 
+// Components
 import Space from '../ui/Space';
+
+// uuid
+import { v4 as uuidv4 } from 'uuid';
 
 // Helpers
 import randomName from '../../utils/randomName';
@@ -15,10 +20,18 @@ import { _getWinListResponseStyle } from '../../utils/helper';
 // React responsive
 import { useMediaQuery } from 'react-responsive';
 
-// Antd
-// import { Space, List, Typography, Divider } from 'antd';
+// Redux
+import { useSelector } from 'react-redux';
+
+// Moment
+import moment from 'moment';
+
+let tempArr = [];
 
 const WinnerList = () => {
+  // Redux
+  const { winRecordList } = useSelector(state => state.jackpot);
+
   // Media Query
   const smallPoint = useMediaQuery({
     query: '(max-width: 1024px)',
@@ -32,11 +45,11 @@ const WinnerList = () => {
   let data = [];
   const [rows, set] = useState(data);
 
-  const height = 30;
+  const height = 40;
 
   const transitions = useTransition(
     rows.map((data, i) => ({ ...data, y: i * height })),
-    d => d.name,
+    d => d.id,
     {
       from: { position: 'absolute', opacity: 0 },
       leave: { height: 0, opacity: 0 },
@@ -52,13 +65,29 @@ const WinnerList = () => {
   }, [rows]);
 
   useEffect(() => {
+    if (!winRecordList?.length) return;
+
     const randomCount = setInterval(() => {
+      const randomNum = _generateTargetNum(0, winRecordList.length - 1);
+
+      if (tempArr.includes(randomNum)) return;
+
+      if (tempArr.length >= 6) {
+        tempArr = [];
+      }
+
+      tempArr.push(randomNum);
+
+      console.log(tempArr);
+
       set([
         {
-          name: randomName.getName(),
-          money: Math.floor(Math.random() * 100000),
-          date: consoleRandomDate(),
-          location: Math.floor(Math.random() * 10) + 1,
+          id: uuidv4(),
+          ip: winRecordList[randomNum].egm_ip,
+          jackpot: winRecordList[randomNum].jackpot,
+          created: winRecordList[randomNum].created,
+          place: winRecordList[randomNum].place,
+          num: randomNum,
         },
         ...rows,
       ]);
@@ -67,7 +96,11 @@ const WinnerList = () => {
     return () => {
       clearInterval(randomCount);
     };
-  }, [rows]);
+  }, [rows, winRecordList]);
+
+  const _generateTargetNum = (max, min) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
 
   let styles;
 
@@ -94,19 +127,20 @@ const WinnerList = () => {
             {styles && (
               <Space positionH="start">
                 <div style={styles}>
-                  <p>{item.date}</p>
+                  <p>{moment(item.created).format('YYYY-MM-DD')}</p>
+                  {/* <p>{consoleRandomDate(item.created)}</p> */}
                 </div>
 
                 <div style={styles}>
-                  <p>場地 {item.location}</p>
+                  <p>{`${item.place} (${item.num})`}</p>
                 </div>
 
                 <div style={styles}>
-                  <p>{item.name}</p>
+                  <p>{item.ip}</p>
                 </div>
 
                 <div style={styles}>
-                  <p>{`$${item.money}`}</p>
+                  <p>{`$${item.jackpot}`}</p>
                 </div>
               </Space>
             )}

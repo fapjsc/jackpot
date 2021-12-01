@@ -3,10 +3,10 @@ import {
   SET_WINNING_PRIZE,
   REMOVE_WIN_PRIZE_FROM_LIST,
   SET_WIN_PRIZE_HISTORY,
-  DISPLAY_WINNING_ANIMATION,
-  REMOVE_DISPLAY_WINNING_ANIMATION,
+  SET_DISPLAY_WIN_PRIZE,
+  REMOVE_DISPLAY_WIN_PRIZE,
   UPDATE_DISPLAY_WIN_PRIZE,
-  // UPDATE_DISPLAY_WIN_PRIZE,
+  SET_WIN_RECORD_LIST,
 } from '../types';
 
 const initialState = {
@@ -14,6 +14,7 @@ const initialState = {
   winningPrize: [],
   history: [],
   displayWinPrize: null,
+  winRecordList: [],
 };
 
 export const jackpotReducer = (state = initialState, action) => {
@@ -73,7 +74,7 @@ export const jackpotReducer = (state = initialState, action) => {
         };
       }
 
-    case DISPLAY_WINNING_ANIMATION:
+    case SET_DISPLAY_WIN_PRIZE:
       return {
         ...state,
         displayWinPrize: state.winningPrize[0]
@@ -93,10 +94,16 @@ export const jackpotReducer = (state = initialState, action) => {
         },
       };
 
-    case REMOVE_DISPLAY_WINNING_ANIMATION:
+    case REMOVE_DISPLAY_WIN_PRIZE:
       return {
         ...state,
         displayWinPrize: null,
+      };
+
+    case SET_WIN_RECORD_LIST:
+      return {
+        ...state,
+        winRecordList: action.winRecordList,
       };
 
     default:

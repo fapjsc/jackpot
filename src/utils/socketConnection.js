@@ -9,7 +9,11 @@ import {
   setJackpotData,
   setWinningPrizeData,
   setHistory,
+  setWinRecordList,
 } from '../store/actions/jackpotActions';
+
+// Api
+import { getWinRecordList } from './api';
 
 const SERVER = 'http://192.168.10.200:3030';
 
@@ -23,6 +27,9 @@ export const connectWithSocket = () => {
 
   socket.on('connect', () => {
     console.log('successfully connected with socket server');
+    if (!store.getState().jackpot.setWinRecordList?.length) {
+      getWinRecordList();
+    }
   });
 
   socket.on('jackpot', jackpotData => {
@@ -34,7 +41,7 @@ export const connectWithSocket = () => {
   });
 
   socket.on('jackpotWinRecord', data => {
-    // console.log(data);
+    store.dispatch(setWinRecordList(data));
   });
 
   socket.on('win-prize', winPrizeData => {
