@@ -1,4 +1,6 @@
-const SERVER = 'http://192.168.10.119:3030';
+import config from '../config/config.json';
+
+const SERVER = config.ip;
 
 // 手動獲取中獎清單
 export const getWinRecordList = async () => {
@@ -24,11 +26,11 @@ export const jackpotHandPay = async reqData => {
     }),
   });
 
-  const data = await response.json();
-
-  // console.log(data);
+  const data = await response.text();
 
   if (!response.ok) throw new Error('Could not fetch agent server');
+
+  if (data?.includes('not get')) throw new Error('Cash in fail');
 
   return data;
 };

@@ -58,45 +58,53 @@
 
   .winNumberBox {
     display: flex;
-    align-items: center;
+    align-items: flex-stretch;
     justify-content: center;
-    // background-color: rgba(102, 88, 6, 0.9);
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
     max-width: 100%;
-    // -webkit-box-shadow: 5px 5px 15px 5px #000000;
+    -webkit-box-shadow: 5px 5px 15px 5px #000000;
     box-shadow: 5px 5px 15px 5px #000000;
 
     position: absolute;
-    // top: 58%;
-    bottom: 10%;
 
-    span {
-      font-size: 10rem;
-    }
-
-    span[level='jackpot'] {
+    &[level='jackpot'] {
       color: #f70e06;
+      bottom: 10%;
+      background-color: rgba(255, 255, 255, 1);
+      // box-shadow: 0 0 10px 5px;
+      box-shadow: -5px -5px 30px 5px #f70e06, 5px 5px 30px 5px #f70e06;
     }
 
-    span[level='secondPrize'] {
+    &[level='secondPrize'] {
       color: #e93eee;
+      bottom: 10%;
+      background-color: rgba(255, 255, 255, 0.8);
+      box-shadow: -5px -5px 30px 5px #e93eee, 5px 5px 30px 5px #e93eee;
     }
 
-    span[level='thirdPrize'] {
+    &[level='thirdPrize'] {
       color: #3881e0;
+      bottom: 25%;
+      box-shadow: 0 0 10px 5px #3881e0;
     }
 
-    span[level='fourthPrize'] {
+    &[level='fourthPrize'] {
       color: #39e743;
+      bottom: 25%;
+      box-shadow: 0 0 10px 5px #39e743;
     }
 
-    span[level='fifthPrize'] {
+    &[level='fifthPrize'] {
       color: #f2f3f4;
+      bottom: 30%;
+      box-shadow: 0 0 10px 5px #f2f3f4;
     }
 
-    span[level='sixthPrize'] {
+    &[level='sixthPrize'] {
       color: #f2f3f4;
+      bottom: 30%;
+      box-shadow: 0 0 10px 5px #f2f3f4;
     }
   }
 }
@@ -119,6 +127,19 @@ $colors: (
   border-color: var(--color);
   padding: 0.5em;
   cursor: pointer;
+
+  &[disabled] {
+    cursor: not-allowed;
+    animation: none;
+
+    &:hover,
+    &:focus {
+      box-shadow: none;
+      transform: translateY(0);
+      color: var(--color);
+      border-color: var(--color);
+    }
+  }
 
   &:hover,
   &:focus {

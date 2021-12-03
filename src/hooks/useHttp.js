@@ -16,7 +16,7 @@ const httpReducer = (state, action) => {
         status: 'completed',
       };
 
-    case 'Error':
+    case 'ERROR':
       return {
         data: null,
         error: action.errorMessage,
@@ -37,11 +37,10 @@ const useHttp = (requestFn, startWithPending = false) => {
 
   const sendRequest = useCallback(
     async requestData => {
-      dispatch({ type: 'pending' });
+      dispatch({ type: 'SEND' });
 
       try {
         const responseData = await requestFn(requestData);
-
         dispatch({ type: 'SUCCESS', responseData });
       } catch (error) {
         dispatch({

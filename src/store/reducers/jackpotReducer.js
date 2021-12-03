@@ -8,6 +8,8 @@ import {
   UPDATE_DISPLAY_WIN_PRIZE,
   SET_WIN_RECORD_LIST,
   UPDATE_WIN_PRIZE_LIST_CASH_IN_STATUS,
+  SHOW_TOAST,
+  SET_SERVICE_BELL,
 } from '../types';
 
 const initialState = {
@@ -16,6 +18,8 @@ const initialState = {
   history: [],
   displayWinPrize: null,
   winRecordList: [],
+  showToast: { show: false, data: null },
+  serviceBell: [],
 };
 
 export const jackpotReducer = (state = initialState, action) => {
@@ -101,8 +105,9 @@ export const jackpotReducer = (state = initialState, action) => {
       );
       const updateItem = {
         ...oldItem,
-        cashInStatus: action.cashInStatus.status,
+        cashInStatus: action.cashInStatus.cashInStatus,
       };
+
       if (oldItem) {
         return {
           ...state,
@@ -127,6 +132,31 @@ export const jackpotReducer = (state = initialState, action) => {
         ...state,
         winRecordList: action.winRecordList,
       };
+
+    case SHOW_TOAST:
+      console.log(action.payload);
+      return {
+        ...state,
+        showToast: {
+          show: action.payload.show,
+          data: action.payload.data,
+        },
+      };
+
+    case SET_SERVICE_BELL:
+      if (action.payload.show === 'action') {
+        return {
+          ...state,
+          serviceBell: [...state.serviceBell, action.payload],
+        };
+      } else {
+        return {
+          ...state,
+          serviceBell: state.serviceBell.filter(
+            el => el.data !== action.payload.data
+          ),
+        };
+      }
 
     default:
       return state;

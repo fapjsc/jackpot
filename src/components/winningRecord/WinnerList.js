@@ -57,7 +57,7 @@ const WinnerList = () => {
   );
 
   useEffect(() => {
-    if (rows?.length === 10) {
+    if (rows?.length === 5) {
       set(rows.slice(0, -1));
       // set([]);
     }

@@ -1,6 +1,9 @@
 import socketClient from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
 
+// Config
+import config from '../config/config.json';
+
 // Redux
 import store from '../store/store';
 
@@ -11,16 +14,20 @@ import {
   setHistory,
   setWinRecordList,
   updateWinPrizeListCashInStatus,
+  setShowToast,
+  setServiceBell,
 } from '../store/actions/jackpotActions';
 
 // Api
 import { getWinRecordList } from './api';
 
-const SERVER = 'http://192.168.10.119:3030';
+const SERVER = config.ip;
 
 let socket;
 
 let tmp;
+
+console.log(store.getState().jackpot.displayWinPrize);
 
 export const connectWithSocket = () => {
   console.log('try to connect');
@@ -62,6 +69,15 @@ export const connectWithSocket = () => {
     );
     store.dispatch(setHistory(winPrizeData));
 
+    if (store.getState().jackpot.displayWinPrize) {
+      store.dispatch(
+        setShowToast({
+          show: true,
+          data: winPrizeData,
+        })
+      );
+    }
+
     if (winPrizeData.cashInStatus === 'pending') {
       // console.log('🔥 中獎了！！', winPrizeData);
     }
@@ -77,13 +93,17 @@ export const connectWithSocket = () => {
 
   socket.on('update-win-prize', cashInStatusData => {
     console.log(cashInStatusData);
+    const cashInStatus = {
+      id: cashInStatusData.id,
+      cashInStatus: cashInStatusData.cashInStatus,
+    };
 
-    // const cashInStatus = {
-    //   id: cashInStatusData.uuid,
-    //   cashInStatus: cashInStatusData.cashInStatus,
-    // };
+    store.dispatch(updateWinPrizeListCashInStatus(cashInStatus));
+  });
 
-    // store.dispatch(updateWinPrizeListCashInStatus(cashInStatus));
+  socket.on('serviceBell', data => {
+    console.log(data);
+    store.dispatch(setServiceBell(data));
   });
 
   // socket.on('cashInSuccess', winPrizeData => {
@@ -96,39 +116,39 @@ export const connectWithSocket = () => {
 };
 
 // ==== 測試播放動畫邏輯用 ==== //
-let arr = ['success', 'fail'];
-let levelArr = [
-  'jackpot',
-  'secondPrize',
-  'thirdPrize',
-  'fourPrize',
-  'fifthPrize',
-  'sixthPrize',
-];
+// let arr = ['success', 'fail'];
+// let levelArr = [
+//   'jackpot',
+//   'secondPrize',
+//   'thirdPrize',
+//   'fourPrize',
+//   'fifthPrize',
+//   'sixthPrize',
+// ];
 
-export const testWinPrize = () => {
-  setInterval(() => {
-    const num = randomNum(1, 2);
-    store.dispatch(
-      setWinningPrizeData({
-        ip: '192.168.10.99',
-        amountWinning: 100.12902942,
-        id: uuidv4(),
-        level: 'level6',
-        cashInStatus: arr[1] || 'success',
-        // cashInStatus: 'success',
-      })
-    );
-  }, 10000);
-};
+// export const testWinPrize = () => {
+//   setInterval(() => {
+//     const num = randomNum(1, 2);
+//     store.dispatch(
+//       setWinningPrizeData({
+//         ip: '192.168.10.99',
+//         amountWinning: 100.12902942,
+//         id: uuidv4(),
+//         level: 'level6',
+//         cashInStatus: arr[1] || 'success',
+//         // cashInStatus: 'success',
+//       })
+//     );
+//   }, 10000);
+// };
 
-function randomNum(minNum, maxNum) {
-  switch (arguments.length) {
-    case 1:
-      return parseInt(Math.random() * minNum + 1, 10);
-    case 2:
-      return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
-    default:
-      return 0;
-  }
-}
+// function randomNum(minNum, maxNum) {
+//   switch (arguments.length) {
+//     case 1:
+//       return parseInt(Math.random() * minNum + 1, 10);
+//     case 2:
+//       return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+//     default:
+//       return 0;
+//   }
+// }

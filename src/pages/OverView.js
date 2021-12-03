@@ -43,7 +43,7 @@ const OverView = () => {
   // 判斷是否開始播放動畫
   useEffect(() => {
     if (displayWinPrize?.isPlayingAnimation === 'notPlaying') {
-      console.log('playing');
+      console.log('isPlaying');
       dispatch(setDisplayWinPrize('isPlaying'));
       setWinPrize(true);
     }
@@ -75,8 +75,10 @@ const OverView = () => {
       displayWinPrize?.isPlayingAnimation === 'playingFinishing'
     ) {
       setWinPrize(false);
+      // dispatch(removeWinningData(displayWinPrize));
+      // dispatch(removeDisplayWinPrizeAnimation());
     }
-  }, [displayWinPrize]);
+  }, [displayWinPrize, dispatch]);
 
   return (
     <div className={classes.container}>
@@ -94,23 +96,32 @@ const OverView = () => {
           unmountOnExit
           onExited={() => {
             setShowOverView(true);
-            dispatch(removeWinningData(displayWinPrize));
-            dispatch(removeDisplayWinPrizeAnimation());
+            // dispatch(removeWinningData(displayWinPrize));
+            // dispatch(removeDisplayWinPrizeAnimation());
           }}
           onEntered={() => {
             setShowOverView(false);
           }}
         >
-          <JackpotPrizeAnimation playAnimationItem={displayWinPrize} />
+          <JackpotPrizeAnimation
+            setWinPrize={setWinPrize}
+            playAnimationItem={displayWinPrize}
+          />
         </CSSTransition>
 
         {!winPrize && (
           <CSSTransition
             in={showOverView}
-            timeout={300}
+            timeout={1000}
             classNames="jackpot-content-transition"
             mountOnEnter
             unmountOnExit
+            onEntered={() => {
+              if (displayWinPrize) {
+                dispatch(removeWinningData(displayWinPrize));
+                dispatch(removeDisplayWinPrizeAnimation());
+              }
+            }}
           >
             <JackpotContent />
           </CSSTransition>

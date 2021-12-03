@@ -8,6 +8,8 @@ import {
   UPDATE_DISPLAY_WIN_PRIZE,
   SET_WIN_RECORD_LIST,
   UPDATE_WIN_PRIZE_LIST_CASH_IN_STATUS,
+  SHOW_TOAST,
+  SET_SERVICE_BELL,
 } from '../types';
 
 export const setJackpotData = jackpotData => {
@@ -69,5 +71,26 @@ export const setWinRecordList = winRecordList => {
   return {
     type: SET_WIN_RECORD_LIST,
     winRecordList,
+  };
+};
+
+export const setShowToast = showData => {
+  return {
+    type: SHOW_TOAST,
+    payload: {
+      show: showData.show,
+      data: showData.data,
+    },
+  };
+};
+
+export const setServiceBell = serviceBellData => {
+  console.log('SET_SERVICE_BELL');
+  return {
+    type: SET_SERVICE_BELL,
+    payload: {
+      show: serviceBellData.action,
+      data: serviceBellData.ip,
+    },
   };
 };
