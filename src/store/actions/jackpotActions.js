@@ -7,6 +7,7 @@ import {
   REMOVE_WIN_PRIZE_FROM_LIST,
   UPDATE_DISPLAY_WIN_PRIZE,
   SET_WIN_RECORD_LIST,
+  UPDATE_WIN_PRIZE_LIST_CASH_IN_STATUS,
 } from '../types';
 
 export const setJackpotData = jackpotData => {
@@ -53,6 +54,13 @@ export const removeDisplayWinPrizeAnimation = () => {
 export const updateDisplayWinPrize = cashInStatus => {
   return {
     type: UPDATE_DISPLAY_WIN_PRIZE,
+    cashInStatus,
+  };
+};
+
+export const updateWinPrizeListCashInStatus = cashInStatus => {
+  return {
+    type: UPDATE_WIN_PRIZE_LIST_CASH_IN_STATUS,
     cashInStatus,
   };
 };

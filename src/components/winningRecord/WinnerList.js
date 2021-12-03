@@ -13,8 +13,6 @@ import Space from '../ui/Space';
 import { v4 as uuidv4 } from 'uuid';
 
 // Helpers
-import randomName from '../../utils/randomName';
-import consoleRandomDate from '../../utils/randomDate';
 import { _getWinListResponseStyle } from '../../utils/helper';
 
 // React responsive
@@ -26,7 +24,7 @@ import { useSelector } from 'react-redux';
 // Moment
 import moment from 'moment';
 
-let tempArr = [];
+let index = 0;
 
 const WinnerList = () => {
   // Redux
@@ -59,8 +57,9 @@ const WinnerList = () => {
   );
 
   useEffect(() => {
-    if (rows?.length > 5) {
+    if (rows?.length === 10) {
       set(rows.slice(0, -1));
+      // set([]);
     }
   }, [rows]);
 
@@ -68,39 +67,28 @@ const WinnerList = () => {
     if (!winRecordList?.length) return;
 
     const randomCount = setInterval(() => {
-      const randomNum = _generateTargetNum(0, winRecordList.length - 1);
+      index++;
 
-      if (tempArr.includes(randomNum)) return;
-
-      if (tempArr.length >= 6) {
-        tempArr = [];
-      }
-
-      tempArr.push(randomNum);
-
-      console.log(tempArr);
+      if (index === winRecordList.length) index = 0;
 
       set([
         {
           id: uuidv4(),
-          ip: winRecordList[randomNum].egm_ip,
-          jackpot: winRecordList[randomNum].jackpot,
-          created: winRecordList[randomNum].created,
-          place: winRecordList[randomNum].place,
-          num: randomNum,
+          ip: winRecordList[index].egm_ip,
+          jackpot: winRecordList[index].jackpot,
+          created: winRecordList[index].created,
+          place: winRecordList[index].place,
+          level: winRecordList[index].level,
+          num: index,
         },
         ...rows,
       ]);
-    }, 2000);
+    }, 3000);
 
     return () => {
       clearInterval(randomCount);
     };
   }, [rows, winRecordList]);
-
-  const _generateTargetNum = (max, min) => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  };
 
   let styles;
 
@@ -120,26 +108,54 @@ const WinnerList = () => {
             style={{
               transform: y.interpolate(y => `translate3d(0,${y}px,0)`),
               width: '100%',
-              padding: '1em',
+              padding: '1.5em',
+              color:
+                item.level === 'jackpot'
+                  ? '#F70E06'
+                  : item.level === 'secondPrize'
+                  ? '#E93EEE'
+                  : item.level === 'thirdPrize'
+                  ? '#3881E0'
+                  : item.level === 'fourthPrize'
+                  ? '#39E743'
+                  : item.level === 'fifthPrize'
+                  ? '#F2F3F4'
+                  : '#F2F3F4',
               ...rest,
             }}
           >
             {styles && (
               <Space positionH="start">
-                <div style={styles}>
+                <div style={{ ...styles, width: '25%' }}>
                   <p>{moment(item.created).format('YYYY-MM-DD')}</p>
-                  {/* <p>{consoleRandomDate(item.created)}</p> */}
                 </div>
 
-                <div style={styles}>
-                  <p>{`${item.place} (${item.num})`}</p>
+                <div
+                  style={{
+                    ...styles,
+                    width: '10%',
+                  }}
+                >
+                  <p>
+                    {item.level === 'jackpot'
+                      ? 'JP-1'
+                      : item.level === 'secondPrize'
+                      ? 'JP-2'
+                      : item.level === 'thirdPrize'
+                      ? 'JP-3'
+                      : item.level === 'fourthPrize'
+                      ? 'JP-4'
+                      : item.level === 'fifthPrize'
+                      ? 'JP-5'
+                      : 'JP-6'}
+                  </p>
                 </div>
 
-                <div style={styles}>
-                  <p>{item.ip}</p>
+                <div style={{ ...styles, width: '20%' }}>
+                  <p>{`${item.place}-${item.num}`}</p>
                 </div>
 
-                <div style={styles}>
+                <div style={{ ...styles }}>
                   <p>{`$${item.jackpot}`}</p>
                 </div>
               </Space>

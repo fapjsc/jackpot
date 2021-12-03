@@ -10,6 +10,7 @@ import {
   setWinningPrizeData,
   setHistory,
   setWinRecordList,
+  updateWinPrizeListCashInStatus,
 } from '../store/actions/jackpotActions';
 
 // Api
@@ -32,6 +33,14 @@ export const connectWithSocket = () => {
     }
   });
 
+  socket.on('disconnect', () => {
+    // console.log('disconnect');
+  });
+
+  socket.on('connect_error', err => {
+    // console.log(`connect_error`);
+  });
+
   socket.on('jackpot', jackpotData => {
     // console.log('get jackpot data');
     if (JSON.stringify(jackpotData) === tmp) return;
@@ -48,7 +57,7 @@ export const connectWithSocket = () => {
     store.dispatch(
       setWinningPrizeData({
         ...winPrizeData,
-        amountWinning: winPrizeData.amountWinning.toFixed(2),
+        amountWinning: winPrizeData.amountWinning?.toFixed(2),
       })
     );
     store.dispatch(setHistory(winPrizeData));
@@ -64,6 +73,17 @@ export const connectWithSocket = () => {
     if (winPrizeData.cashInStatus === 'fail') {
       console.log('🔺 入帳時發生錯誤！！', winPrizeData);
     }
+  });
+
+  socket.on('update-win-prize', cashInStatusData => {
+    console.log(cashInStatusData);
+
+    // const cashInStatus = {
+    //   id: cashInStatusData.uuid,
+    //   cashInStatus: cashInStatusData.cashInStatus,
+    // };
+
+    // store.dispatch(updateWinPrizeListCashInStatus(cashInStatus));
   });
 
   // socket.on('cashInSuccess', winPrizeData => {

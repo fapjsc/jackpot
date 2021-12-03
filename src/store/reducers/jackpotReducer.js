@@ -7,6 +7,7 @@ import {
   REMOVE_DISPLAY_WIN_PRIZE,
   UPDATE_DISPLAY_WIN_PRIZE,
   SET_WIN_RECORD_LIST,
+  UPDATE_WIN_PRIZE_LIST_CASH_IN_STATUS,
 } from '../types';
 
 const initialState = {
@@ -93,6 +94,27 @@ export const jackpotReducer = (state = initialState, action) => {
           cashInStatus: action.cashInStatus,
         },
       };
+
+    case UPDATE_WIN_PRIZE_LIST_CASH_IN_STATUS:
+      const oldItem = state.winningPrize.find(
+        el => el.id === action.cashInStatus.id
+      );
+      const updateItem = {
+        ...oldItem,
+        cashInStatus: action.cashInStatus.status,
+      };
+      if (oldItem) {
+        return {
+          ...state,
+          winningPrize: state.winningPrize.map(el =>
+            el.id === oldItem.id ? updateItem : el
+          ),
+        };
+      } else {
+        return {
+          ...state,
+        };
+      }
 
     case REMOVE_DISPLAY_WIN_PRIZE:
       return {

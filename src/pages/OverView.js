@@ -85,7 +85,7 @@ const OverView = () => {
         <WinningRecord />
       </div>
 
-      <div style={{ flex: '0.7', backgroundColor: 'rgba(0,0,0,.6)' }}>
+      <div style={{ flex: '0.7' }}>
         <CSSTransition
           in={winPrize}
           timeout={1000}
@@ -104,15 +104,17 @@ const OverView = () => {
           <JackpotPrizeAnimation playAnimationItem={displayWinPrize} />
         </CSSTransition>
 
-        <CSSTransition
-          in={showOverView}
-          timeout={300}
-          classNames="jackpot-content-transition"
-          mountOnEnter
-          unmountOnExit
-        >
-          <JackpotContent />
-        </CSSTransition>
+        {!winPrize && (
+          <CSSTransition
+            in={showOverView}
+            timeout={300}
+            classNames="jackpot-content-transition"
+            mountOnEnter
+            unmountOnExit
+          >
+            <JackpotContent />
+          </CSSTransition>
+        )}
       </div>
     </div>
   );

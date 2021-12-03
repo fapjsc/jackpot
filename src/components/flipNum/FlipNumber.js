@@ -150,23 +150,51 @@ const FlipNumber = ({ level, size, count, styles }) => {
         : '6em';
       break;
 
+    case 'fifthPrize':
+      fontSize = miniPoint
+        ? '3.8em'
+        : largePoint
+        ? '9em'
+        : smallPoint
+        ? '4em'
+        : mediumPoint
+        ? '4.3em'
+        : bigPoint
+        ? '4.8em'
+        : '6em';
+      break;
+
+    case 'sixthPrize':
+      fontSize = miniPoint
+        ? '3.8em'
+        : largePoint
+        ? '9em'
+        : smallPoint
+        ? '4em'
+        : mediumPoint
+        ? '4.3em'
+        : bigPoint
+        ? '4.8em'
+        : '6em';
+      break;
+
     //=== Side bar ===//
     case 'side-bar':
       fontSize = miniPoint
-        ? '2rem'
+        ? '1.8rem'
         : largePoint
-        ? '6.3rem'
+        ? '6.2rem'
         : smallPoint
-        ? '2.5rem'
+        ? '2.4rem'
         : mediumPoint
         ? '2.8rem'
         : bigPoint
-        ? '3.3rem'
-        : '4rem';
+        ? '3.1rem'
+        : '3.8rem';
       break;
 
     default:
-      fontSize = '3.8rem';
+      fontSize = '3.6rem';
   }
 
   return (
