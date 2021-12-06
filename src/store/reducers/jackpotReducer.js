@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import {
   SET_JACKPOT_DATA,
   SET_WINNING_PRIZE,
@@ -10,6 +12,7 @@ import {
   UPDATE_WIN_PRIZE_LIST_CASH_IN_STATUS,
   SHOW_TOAST,
   SET_SERVICE_BELL,
+  REMOVE_SERVICE_BELL_FROM_LIST,
 } from '../types';
 
 const initialState = {
@@ -147,16 +150,31 @@ export const jackpotReducer = (state = initialState, action) => {
       if (action.payload.show === 'action') {
         return {
           ...state,
-          serviceBell: [...state.serviceBell, action.payload],
+          serviceBell: [
+            ...state.serviceBell,
+            {
+              ...action.payload,
+              id: uuidv4(),
+              time: new Date().toLocaleTimeString(),
+            },
+          ],
         };
       } else {
         return {
           ...state,
-          serviceBell: state.serviceBell.filter(
-            el => el.data !== action.payload.data
+          serviceBell: state.serviceBell.map(el =>
+            el.data === action.payload.data
+              ? { ...el, show: action.payload.show }
+              : el
           ),
         };
       }
+
+    case REMOVE_SERVICE_BELL_FROM_LIST:
+      return {
+        ...state,
+        serviceBell: state.serviceBell.filter(el => el.id !== action.id),
+      };
 
     default:
       return state;

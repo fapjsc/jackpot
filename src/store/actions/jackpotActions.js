@@ -10,6 +10,7 @@ import {
   UPDATE_WIN_PRIZE_LIST_CASH_IN_STATUS,
   SHOW_TOAST,
   SET_SERVICE_BELL,
+  REMOVE_SERVICE_BELL_FROM_LIST,
 } from '../types';
 
 export const setJackpotData = jackpotData => {
@@ -85,12 +86,18 @@ export const setShowToast = showData => {
 };
 
 export const setServiceBell = serviceBellData => {
-  console.log('SET_SERVICE_BELL');
   return {
     type: SET_SERVICE_BELL,
     payload: {
       show: serviceBellData.action,
       data: serviceBellData.ip,
     },
+  };
+};
+
+export const removeServiceBell = id => {
+  return {
+    type: REMOVE_SERVICE_BELL_FROM_LIST,
+    id,
   };
 };

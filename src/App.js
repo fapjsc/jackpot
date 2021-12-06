@@ -1,29 +1,44 @@
 import { useEffect } from 'react';
 import OverView from './pages/OverView';
-import { connectWithSocket, testWinPrize } from './utils/socketConnection';
+import {
+  connectWithAgent,
+  disconnectWithAgent,
+  testWinPrize,
+} from './utils/socketConnection';
 
 // Audio
 import staticAudio from './assets/music/static.mp3';
 import winPrizeAudio from './assets/music/winPrize.mp3';
 import goldScrollAudio from './assets/music/gold-scroll.mp3';
 import jackpotAudio from './assets/music/jackpot.mp3';
+import serviceAudio from './assets/music/service-ball.mp3';
+import closeService from './assets/music/close-service-bell.wav';
 
 // Redux
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
+// Actions
+import { removeServiceBell } from './store/actions/jackpotActions';
 
 // Toast
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
+  const dispatch = useDispatch();
+
   const { displayWinPrize, jackpotData, serviceBell } = useSelector(
     state => state.jackpot
   );
 
   useEffect(() => {
-    connectWithSocket();
+    connectWithAgent();
 
     // testWinPrize();
+
+    return () => {
+      disconnectWithAgent();
+    };
   }, []);
 
   // 背景音樂
@@ -85,34 +100,43 @@ const App = () => {
     };
   }, [displayWinPrize]);
 
-  // // 服務鈴
-  // useEffect(() => {
-  //   if (serviceBell?.length) {
-  //     toast('test', {
-  //       position: 'top-right',
-  //       autoClose: false,
-  //       style: { backgroundColor: 'red' },
-  //       className: `123`,
-  //     });
-  //   }
-  // }, [serviceBell]);
+  // 服務鈴
+  useEffect(() => {
+    const serviceOpen = () => {
+      let serviceBell = new Audio(serviceAudio);
+      serviceBell.play();
+    };
 
-  // const test = () => {
-  //   const el = document.getElementsByClassName('123');
-  //   el.parentElement.removeChild(el);
-  // };
+    const serviceBellCloseHandler = id => {
+      dispatch(removeServiceBell(id));
+      let closeBell = new Audio(closeService);
+      closeBell.currentTime = 0.5;
+      closeBell.play();
+    };
+
+    if (serviceBell?.length) {
+      serviceBell.forEach(el => {
+        if (el.show === 'action') {
+          toast.error(`服務人員請至 ${el.data} - ${el.time}`, {
+            position: 'bottom-left',
+            autoClose: false,
+            // style: { backgroundColor: '#fff' },
+            toastId: el.id,
+            onOpen: () => serviceOpen(),
+          });
+        } else {
+          serviceBellCloseHandler(el.id);
+          toast.dismiss(el.id);
+          dispatch(removeServiceBell(el.id));
+        }
+      });
+    }
+  }, [serviceBell, dispatch]);
 
   return (
     <>
       <ToastContainer pauseOnFocusLoss={false} />
       <OverView />
-
-      <button
-        onClick={test}
-        style={{ width: '10rem', height: '10rem', backgroundColor: 'blue' }}
-      >
-        test
-      </button>
     </>
   );
 };

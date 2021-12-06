@@ -43,7 +43,7 @@ const WinnerList = () => {
   let data = [];
   const [rows, set] = useState(data);
 
-  const height = 40;
+  const height = 35;
 
   const transitions = useTransition(
     rows.map((data, i) => ({ ...data, y: i * height })),
@@ -57,7 +57,7 @@ const WinnerList = () => {
   );
 
   useEffect(() => {
-    if (rows?.length === 5) {
+    if (rows?.length === 6) {
       set(rows.slice(0, -1));
       // set([]);
     }
