@@ -15,6 +15,7 @@ import { setShowToast } from '../../store/actions/jackpotActions';
 import FlipNumber from '../flipNum/FlipNumber';
 import Firework from '../ui/Firework';
 import Space from '../ui/Space';
+import TextAnimation from '../ui/TextAnimation';
 
 // Hooks
 import useHttp from '../../hooks/useHttp';
@@ -24,7 +25,10 @@ import { jackpotHandPay } from '../../utils/api';
 
 // Helpers
 import {
-  _getLevelText, _getAmount, _splitAmountToStr, _getLevelColor,
+  _getLevelText,
+  _getAmount,
+  _splitAmountToStr,
+  _getLevelColor,
 } from '../../utils/helper';
 
 // Styles
@@ -95,7 +99,7 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
       const Msg = () => (
         <div>
           <span>
-            👏  恭喜
+            👏 恭喜
             {showToast.data.ip}
             {' '}
             -
@@ -115,29 +119,15 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
         </div>
       );
 
-      toast(
-        <Msg />,
-        {
-          autoClose: 5000,
-          toastId: showToast.data.id,
-          style: {
-            backgroundColor: 'rgba(0,0,0,.5)',
-            color: textColor,
-            fontWeight: 'bold',
-
-          },
+      toast(<Msg />, {
+        autoClose: 5000,
+        toastId: showToast.data.id,
+        style: {
+          backgroundColor: 'rgba(0,0,0,.5)',
+          color: textColor,
+          fontWeight: 'bold',
         },
-      );
-
-      // toast(
-      //   `👏  恭喜 ${showToast.data.ip} 獲得 ${_getLevelText(
-      //     showToast.data.level,
-      //   )} 獎金 $${_splitAmountToStr(amount)}`,
-      //   {
-      //     autoClose: 5000,
-      //     toastId: showToast.data.id,
-      //   },
-      // );
+      });
 
       dispatch(setShowToast({ show: false, data: null }));
     }
@@ -162,6 +152,9 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
   return (
     <div className={classes.container}>
       <div level={playAnimationItem?.level} className={classes.animationBox}>
+        <div level={playAnimationItem?.level} className={classes.textAnimationBox}>
+          <TextAnimation machineNum={playAnimationItem.ip} />
+        </div>
         <div className={classes.winNumberBox} level={playAnimationItem?.level}>
           <span
             style={{
@@ -202,7 +195,11 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
 
         <button
           type="button"
-          disabled={status === 'pending' || !enableBtn || playAnimationItem?.cashInStatus === 'success'}
+          disabled={
+            status === 'pending'
+            || !enableBtn
+            || playAnimationItem?.cashInStatus === 'success'
+          }
           className={classes.raise}
           onClick={handleCashInOnclick}
         >
@@ -230,6 +227,7 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
 
 JackpotPrizeAnimation.propTypes = {
   playAnimationItem: PropTypes.shape({
+    ip: PropTypes.string,
     id: PropTypes.string,
     cashInStatus: PropTypes.string,
     level: PropTypes.string,

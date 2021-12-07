@@ -1,0 +1,36 @@
+.text-hero {
+  //   background: #ddd;
+  height: 35%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+
+  .text {
+    animation: slideUp 0.75s 0.5s cubic-bezier(0.17, 0.88, 0.32, 1.27) both,
+      fadeIn 0.25s 0.5s ease-in both;
+    padding: 0 20px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 3px 3px 7px rgba(0, 0, 0, 0.61);
+    top: 50%;
+    width: 100%;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(200%);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

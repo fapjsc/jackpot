@@ -58,7 +58,7 @@ const OverView = () => {
       setTimeout(() => {
         // console.log('playing Finishing');
         dispatch(setDisplayWinPrize('playingFinishing'));
-      }, 9000);
+      }, 30000);
     }
   }, [displayWinPrize, dispatch]);
 
