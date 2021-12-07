@@ -1,7 +1,7 @@
 import { createStore, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { jackpotReducer } from './reducers/jackpotReducer';
+import jackpotReducer from './reducers/jackpotReducer';
 
 const reducer = combineReducers({
   jackpot: jackpotReducer,

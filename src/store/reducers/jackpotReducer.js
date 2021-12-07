@@ -25,7 +25,7 @@ const initialState = {
   serviceBell: [],
 };
 
-export const jackpotReducer = (state = initialState, action) => {
+const jackpotReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_JACKPOT_DATA:
       return {
@@ -35,61 +35,56 @@ export const jackpotReducer = (state = initialState, action) => {
         },
       };
 
-    case SET_WINNING_PRIZE:
+    case SET_WINNING_PRIZE: {
       const { id } = action.winningPrizeData;
       const item = { ...action.winningPrizeData };
-      const existsItem = state.winningPrize.find(el => el.id === id);
+      const existsItem = state.winningPrize.find((el) => el.id === id);
 
       if (existsItem) {
         return {
           ...state,
-          winningPrize: state.winningPrize.map(el =>
-            el.id === id ? item : el
-          ),
-        };
-      } else {
-        return {
-          ...state,
-          winningPrize: [...state.winningPrize, item],
+          winningPrize: state.winningPrize.map((el) => (el.id === id ? item : el)),
         };
       }
-
-    case REMOVE_WIN_PRIZE_FROM_LIST:
       return {
         ...state,
-        winningPrize: state.winningPrize.filter(
-          el => el.id !== action.winningPrizeData.id
-        ),
+        winningPrize: [...state.winningPrize, item],
+      };
+    }
+
+    case REMOVE_WIN_PRIZE_FROM_LIST:
+      if (state.winningPrize[0].id === action.winningPrizeData.id) {
+        return {
+          ...state,
+          winningPrize: state.winningPrize.filter((el) => el.id !== action.winningPrizeData.id),
+          displayWinPrize: null,
+        };
+      }
+      return {
+        ...state,
       };
 
-    case SET_WIN_PRIZE_HISTORY:
+    case SET_WIN_PRIZE_HISTORY: {
       const prizeItem = { ...action.winPrizeData };
-      const prizeExistsItem = state.history.find(
-        el => el.id === action.winPrizeData.id
-      );
+      const prizeExistsItem = state.history.find((el) => el.id === action.winPrizeData.id);
 
       if (prizeExistsItem) {
         return {
           ...state,
-          history: state.history.map(el =>
-            el.id === action.winPrizeData.id ? prizeItem : el
-          ),
-        };
-      } else {
-        return {
-          ...state,
-          history: [...state.history, prizeItem],
+          history: state.history.map((el) => (el.id === action.winPrizeData.id ? prizeItem : el)),
         };
       }
+      return {
+        ...state,
+        history: [...state.history, prizeItem],
+      };
+    }
 
     case SET_DISPLAY_WIN_PRIZE:
       return {
         ...state,
         displayWinPrize: state.winningPrize[0]
-          ? {
-              ...state.winningPrize[0],
-              isPlayingAnimation: action.isPlayingAnimation || 'notPlaying',
-            }
+          ? { ...state.winningPrize[0], isPlayingAnimation: action.isPlayingAnimation || 'notPlaying' }
           : null,
       };
 
@@ -102,10 +97,8 @@ export const jackpotReducer = (state = initialState, action) => {
         },
       };
 
-    case UPDATE_WIN_PRIZE_LIST_CASH_IN_STATUS:
-      const oldItem = state.winningPrize.find(
-        el => el.id === action.cashInStatus.id
-      );
+    case UPDATE_WIN_PRIZE_LIST_CASH_IN_STATUS: {
+      const oldItem = state.winningPrize.find((el) => el.id === action.cashInStatus.id);
       const updateItem = {
         ...oldItem,
         cashInStatus: action.cashInStatus.cashInStatus,
@@ -114,15 +107,13 @@ export const jackpotReducer = (state = initialState, action) => {
       if (oldItem) {
         return {
           ...state,
-          winningPrize: state.winningPrize.map(el =>
-            el.id === oldItem.id ? updateItem : el
-          ),
-        };
-      } else {
-        return {
-          ...state,
+          winningPrize: state.winningPrize.map((el) => (el.id === oldItem.id ? updateItem : el)),
         };
       }
+      return {
+        ...state,
+      };
+    }
 
     case REMOVE_DISPLAY_WIN_PRIZE:
       return {
@@ -137,7 +128,6 @@ export const jackpotReducer = (state = initialState, action) => {
       };
 
     case SHOW_TOAST:
-      console.log(action.payload);
       return {
         ...state,
         showToast: {
@@ -159,24 +149,24 @@ export const jackpotReducer = (state = initialState, action) => {
             },
           ],
         };
-      } else {
-        return {
-          ...state,
-          serviceBell: state.serviceBell.map(el =>
-            el.data === action.payload.data
-              ? { ...el, show: action.payload.show }
-              : el
-          ),
-        };
       }
+      return {
+        ...state,
+        serviceBell: state.serviceBell.map((el) => {
+          if (el.data === action.payload.data) return { ...el, show: action.payload.show };
+          return el;
+        }),
+      };
 
     case REMOVE_SERVICE_BELL_FROM_LIST:
       return {
         ...state,
-        serviceBell: state.serviceBell.filter(el => el.id !== action.id),
+        serviceBell: state.serviceBell.filter((el) => el.id !== action.id),
       };
 
     default:
       return state;
   }
 };
+
+export default jackpotReducer;

@@ -36,7 +36,7 @@ const useHttp = (requestFn, startWithPending = false) => {
   });
 
   const sendRequest = useCallback(
-    async requestData => {
+    async (requestData) => {
       dispatch({ type: 'SEND' });
 
       try {
@@ -49,6 +49,7 @@ const useHttp = (requestFn, startWithPending = false) => {
         });
       }
     },
+    // eslint-disable-next-line comma-dangle
     [requestFn]
   );
 

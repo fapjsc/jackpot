@@ -1,4 +1,9 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+// React-animation
+import { CSSTransition } from 'react-transition-group';
+
+// Redux
+import { useSelector, useDispatch } from 'react-redux';
 
 // Components
 import SideBar from '../components/SideBar';
@@ -6,17 +11,11 @@ import JackpotContent from '../components/JackpotContent';
 import WinningRecord from '../components/winningRecord/WinningRecord';
 import JackpotPrizeAnimation from '../components/winPrizeAnimation/JackpotPrizeAnimation';
 
-// React-animation
-import { CSSTransition } from 'react-transition-group';
-
-// Redux
-import { useSelector, useDispatch } from 'react-redux';
-
 // actions
 import {
   removeWinningData,
   setDisplayWinPrize,
-  removeDisplayWinPrizeAnimation,
+  // removeDisplayWinPrizeAnimation,
   updateDisplayWinPrize,
 } from '../store/actions/jackpotActions';
 
@@ -30,7 +29,7 @@ const OverView = () => {
   const [showOverView, setShowOverView] = useState(true);
 
   // Redux
-  const { winningPrize, displayWinPrize } = useSelector(state => state.jackpot);
+  const { winningPrize, displayWinPrize } = useSelector((state) => state.jackpot);
   const dispatch = useDispatch();
 
   // 設定中獎播放動畫數據
@@ -42,8 +41,10 @@ const OverView = () => {
 
   // 判斷是否開始播放動畫
   useEffect(() => {
+    if (!displayWinPrize) return;
+
     if (displayWinPrize?.isPlayingAnimation === 'notPlaying') {
-      console.log('isPlaying');
+      // console.log('isPlaying');
       dispatch(setDisplayWinPrize('isPlaying'));
       setWinPrize(true);
     }
@@ -51,11 +52,13 @@ const OverView = () => {
 
   // 播放10秒後改變狀態
   useEffect(() => {
+    if (!displayWinPrize) return;
+
     if (displayWinPrize?.isPlayingAnimation === 'isPlaying') {
       setTimeout(() => {
-        console.log('playing Finishing');
+        // console.log('playing Finishing');
         dispatch(setDisplayWinPrize('playingFinishing'));
-      }, 10000);
+      }, 9000);
     }
   }, [displayWinPrize, dispatch]);
 
@@ -70,10 +73,8 @@ const OverView = () => {
 
   // 結束動畫
   useEffect(() => {
-    if (
-      displayWinPrize?.cashInStatus === 'success' &&
-      displayWinPrize?.isPlayingAnimation === 'playingFinishing'
-    ) {
+    if (!displayWinPrize) return;
+    if (displayWinPrize?.cashInStatus === 'success' && displayWinPrize?.isPlayingAnimation === 'playingFinishing') {
       setWinPrize(false);
       // dispatch(removeWinningData(displayWinPrize));
       // dispatch(removeDisplayWinPrizeAnimation());
@@ -90,37 +91,31 @@ const OverView = () => {
       <div style={{ flex: '0.7' }}>
         <CSSTransition
           in={winPrize}
-          timeout={1000}
+          timeout={600}
           classNames="jackpot-animation-transition"
           mountOnEnter
           unmountOnExit
           onExited={() => {
             setShowOverView(true);
-            // dispatch(removeWinningData(displayWinPrize));
-            // dispatch(removeDisplayWinPrizeAnimation());
           }}
           onEntered={() => {
             setShowOverView(false);
           }}
         >
-          <JackpotPrizeAnimation
-            setWinPrize={setWinPrize}
-            playAnimationItem={displayWinPrize}
-          />
+          <JackpotPrizeAnimation setWinPrize={setWinPrize} playAnimationItem={displayWinPrize} />
         </CSSTransition>
 
         {!winPrize && (
           <CSSTransition
             in={showOverView}
-            timeout={1000}
+            timeout={600}
             classNames="jackpot-content-transition"
             mountOnEnter
             unmountOnExit
             onEntered={() => {
-              if (displayWinPrize) {
-                dispatch(removeWinningData(displayWinPrize));
-                dispatch(removeDisplayWinPrizeAnimation());
-              }
+              if (!displayWinPrize) return;
+              dispatch(removeWinningData(displayWinPrize));
+              // dispatch(removeDisplayWinPrizeAnimation());
             }}
           >
             <JackpotContent />

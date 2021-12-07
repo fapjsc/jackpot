@@ -8,9 +8,10 @@ const useOdometer = (ref, value, options) => {
 
   React.useEffect(() => {
     if (ref.current === null) return;
-    od.current = new Odometer(
-      Object.assign({}, options, { el: ref.current, value })
-    );
+    od.current = new Odometer({ ...options, el: ref.current, value });
+
+    // eslint-disable-next-line prefer-object-spread
+    // od.current = new Odometer(Object.assign({}, options, { el: ref.current, value }));
   }, [ref, options, value]);
   // initial effect
 

@@ -1,4 +1,4 @@
-export const _getWinListResponseStyle = devicesSize => {
+export const _getWinListResponseStyle = (devicesSize) => {
   switch (devicesSize) {
     case 'large':
       return {
@@ -20,7 +20,7 @@ export const _getWinListResponseStyle = devicesSize => {
   }
 };
 
-export const _getLevelText = level => {
+export const _getLevelText = (level) => {
   switch (level) {
     case 'jackpot':
       return 'JP-1';
@@ -45,11 +45,42 @@ export const _getLevelText = level => {
   }
 };
 
-export const _getAmount = amount => {
-  console.log(amount);
-  const amountNum = Number(amount).toFixed(4) * 1 + 0.0001;
-  const amountText = String(amountNum);
-  const formatAmountText = amountText.substring(0, amountText.length - 2);
-  console.log(formatAmountText);
+export const _getLevelColor = (level) => {
+  switch (level) {
+    case 'jackpot':
+      return '#F70E06';
+
+    case 'secondPrize':
+      return '#E93EEE';
+
+    case 'thirdPrize':
+      return '#3881E0';
+
+    case 'fourthPrize':
+      return '#39E743';
+
+    case 'fifthPrize':
+      return '#F2F3F4';
+
+    case 'sixthPrize':
+      return '#F2F3F4';
+
+    default:
+      return '';
+  }
+};
+
+export const _getAmount = (amount) => {
+  if (!amount) return;
+
+  const amountNum = +(`${Math.round(`${amount + 0.0001}e+4`)}e-4`);
+  return amountNum;
+};
+
+export const _splitAmountToStr = (amount) => {
+  if (!amount) return;
+
+  const amountStr = String(amount);
+  const formatAmountText = amountStr.substring(0, amountStr.length - 2);
   return formatAmountText;
 };

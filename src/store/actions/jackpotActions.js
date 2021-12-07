@@ -13,91 +13,67 @@ import {
   REMOVE_SERVICE_BELL_FROM_LIST,
 } from '../types';
 
-export const setJackpotData = jackpotData => {
-  return {
-    type: SET_JACKPOT_DATA,
-    jackpotData,
-  };
-};
+export const setJackpotData = (jackpotData) => ({
+  type: SET_JACKPOT_DATA,
+  jackpotData,
+});
 
-export const setWinningPrizeData = winningPrizeData => {
-  return {
-    type: SET_WINNING_PRIZE,
-    winningPrizeData,
-  };
-};
+export const setWinningPrizeData = (winningPrizeData) => ({
+  type: SET_WINNING_PRIZE,
+  winningPrizeData,
+});
 
-export const removeWinningData = winningPrizeData => {
-  return {
-    type: REMOVE_WIN_PRIZE_FROM_LIST,
-    winningPrizeData,
-  };
-};
+export const removeWinningData = (winningPrizeData) => ({
+  type: REMOVE_WIN_PRIZE_FROM_LIST,
+  winningPrizeData,
+});
 
-export const setHistory = winPrizeData => {
-  return {
-    type: SET_WIN_PRIZE_HISTORY,
-    winPrizeData,
-  };
-};
+export const setHistory = (winPrizeData) => ({
+  type: SET_WIN_PRIZE_HISTORY,
+  winPrizeData,
+});
 
-export const setDisplayWinPrize = isPlayingAnimation => {
-  return {
-    type: SET_DISPLAY_WIN_PRIZE,
-    isPlayingAnimation,
-  };
-};
+export const setDisplayWinPrize = (isPlayingAnimation) => ({
+  type: SET_DISPLAY_WIN_PRIZE,
+  isPlayingAnimation,
+});
 
-export const removeDisplayWinPrizeAnimation = () => {
-  return {
-    type: REMOVE_DISPLAY_WIN_PRIZE,
-  };
-};
+export const removeDisplayWinPrizeAnimation = () => ({
+  type: REMOVE_DISPLAY_WIN_PRIZE,
+});
 
-export const updateDisplayWinPrize = cashInStatus => {
-  return {
-    type: UPDATE_DISPLAY_WIN_PRIZE,
-    cashInStatus,
-  };
-};
+export const updateDisplayWinPrize = (cashInStatus) => ({
+  type: UPDATE_DISPLAY_WIN_PRIZE,
+  cashInStatus,
+});
 
-export const updateWinPrizeListCashInStatus = cashInStatus => {
-  return {
-    type: UPDATE_WIN_PRIZE_LIST_CASH_IN_STATUS,
-    cashInStatus,
-  };
-};
+export const updateWinPrizeListCashInStatus = (cashInStatus) => ({
+  type: UPDATE_WIN_PRIZE_LIST_CASH_IN_STATUS,
+  cashInStatus,
+});
 
-export const setWinRecordList = winRecordList => {
-  return {
-    type: SET_WIN_RECORD_LIST,
-    winRecordList,
-  };
-};
+export const setWinRecordList = (winRecordList) => ({
+  type: SET_WIN_RECORD_LIST,
+  winRecordList,
+});
 
-export const setShowToast = showData => {
-  return {
-    type: SHOW_TOAST,
-    payload: {
-      show: showData.show,
-      data: showData.data,
-    },
-  };
-};
+export const setShowToast = (showData) => ({
+  type: SHOW_TOAST,
+  payload: {
+    show: showData.show,
+    data: showData.data,
+  },
+});
 
-export const setServiceBell = serviceBellData => {
-  return {
-    type: SET_SERVICE_BELL,
-    payload: {
-      show: serviceBellData.action,
-      data: serviceBellData.ip,
-    },
-  };
-};
+export const setServiceBell = (serviceBellData) => ({
+  type: SET_SERVICE_BELL,
+  payload: {
+    show: serviceBellData.action,
+    data: serviceBellData.ip,
+  },
+});
 
-export const removeServiceBell = id => {
-  return {
-    type: REMOVE_SERVICE_BELL_FROM_LIST,
-    id,
-  };
-};
+export const removeServiceBell = (id) => ({
+  type: REMOVE_SERVICE_BELL_FROM_LIST,
+  id,
+});

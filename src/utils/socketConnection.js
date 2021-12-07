@@ -1,8 +1,11 @@
 import socketClient from 'socket.io-client';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';s
 
 // Config
 import config from '../config/config.json';
+
+// Helpers
+import { _getAmount } from './helper';
 
 // Redux
 import store from '../store/store';
@@ -27,7 +30,7 @@ let socket;
 
 let tmp;
 
-console.log(store.getState().jackpot.displayWinPrize);
+// console.log(store.getState().jackpot.displayWinPrize);
 
 export const connectWithAgent = () => {
   console.log('try to connect');
@@ -44,11 +47,11 @@ export const connectWithAgent = () => {
     console.log('disconnect');
   });
 
-  socket.on('connect_error', err => {
-    console.log(`connect_error`);
+  socket.on('connect_error', (err) => {
+    console.log('connect_error', err);
   });
 
-  socket.on('jackpot', jackpotData => {
+  socket.on('jackpot', (jackpotData) => {
     // console.log('get jackpot data');
     if (JSON.stringify(jackpotData) === tmp) return;
 
@@ -56,26 +59,22 @@ export const connectWithAgent = () => {
     store.dispatch(setJackpotData(jackpotData));
   });
 
-  socket.on('jackpotWinRecord', data => {
+  socket.on('jackpotWinRecord', (data) => {
     store.dispatch(setWinRecordList(data));
   });
 
-  socket.on('win-prize', winPrizeData => {
+  socket.on('win-prize', (winPrizeData) => {
     store.dispatch(
       setWinningPrizeData({
         ...winPrizeData,
-        amountWinning: winPrizeData.amountWinning?.toFixed(2),
-      })
+        // amountWinning: winPrizeData.amountWinning?.toFixed(2),
+        amountWinning: _getAmount(winPrizeData.amountWinning),
+      }),
     );
     store.dispatch(setHistory(winPrizeData));
 
     if (store.getState().jackpot.displayWinPrize) {
-      store.dispatch(
-        setShowToast({
-          show: true,
-          data: winPrizeData,
-        })
-      );
+      store.dispatch(setShowToast({ show: true, data: winPrizeData }));
     }
 
     if (winPrizeData.cashInStatus === 'pending') {
@@ -87,12 +86,12 @@ export const connectWithAgent = () => {
     }
 
     if (winPrizeData.cashInStatus === 'fail') {
-      console.log('🔺 入帳時發生錯誤！！', winPrizeData);
+      // console.log('🔺 入帳時發生錯誤！！', winPrizeData);
     }
   });
 
-  socket.on('update-win-prize', cashInStatusData => {
-    console.log(cashInStatusData);
+  socket.on('update-win-prize', (cashInStatusData) => {
+    // console.log(cashInStatusData);
     const cashInStatus = {
       id: cashInStatusData.id,
       cashInStatus: cashInStatusData.cashInStatus,
@@ -101,8 +100,8 @@ export const connectWithAgent = () => {
     store.dispatch(updateWinPrizeListCashInStatus(cashInStatus));
   });
 
-  socket.on('serviceBell', data => {
-    console.log(data);
+  socket.on('serviceBell', (data) => {
+    // console.log(data);
     store.dispatch(setServiceBell(data));
   });
 

@@ -12,7 +12,7 @@ export const getWinRecordList = async () => {
 };
 
 // 手動派彩
-export const jackpotHandPay = async reqData => {
+export const jackpotHandPay = async (reqData) => {
   const { insertId, uuid } = reqData;
   // console.log(insertId, uuid);
   const url = `${SERVER}/test/jackpotHandPay`;
@@ -36,7 +36,7 @@ export const jackpotHandPay = async reqData => {
 };
 
 // action: 'action' or 'cancel'
-export const serviceCall = async action => {
+export const serviceCall = async (action) => {
   const response = await fetch(`${SERVER}/test/serviceBell`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
