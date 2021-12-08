@@ -33,6 +33,7 @@ const Firework = ({ level }) => {
         // backgroundColor: '#3D0806',
         opacity: '.25',
       }}
+
     />
   );
 };

@@ -35,6 +35,21 @@ import {
 import classes from './JackpotAnimation.module.scss';
 
 const JackpotPrizeAnimation = ({ playAnimationItem }) => {
+  if (!playAnimationItem) {
+    playAnimationItem = {
+      id: 123456789,
+      amountWinning: 100,
+      inserId: 1394,
+      cashInStatus: 'padding',
+      // level: 'jackpot',
+      level: 'secondPrize',
+      // level: 'thirdPrize',
+      // level: 'fourthPrize',
+      // level: 'fifthPrize',
+      // level: 'sixthPrize',
+      ip: '192.168.10.30',
+    };
+  }
   // Init State
   const [count, setCount] = useState(0);
   const [enableBtn, setEnableBtn] = useState(true);
@@ -47,22 +62,6 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
   const {
     sendRequest, data: message, status, error,
   } = useHttp(jackpotHandPay);
-
-  if (!playAnimationItem) {
-    playAnimationItem = {
-      id: 123456789,
-      amountWinning: 100,
-      inserId: 1394,
-      cashInStatus: 'padding',
-      level: 'jackpot',
-      // level: 'secondPrize',
-      // level: 'thirdPrize',
-      // level: 'fourthPrize',
-      // level: 'fifthPrize',
-      // level: 'sixthPrize',
-      ip: '192.168.10.30',
-    };
-  }
 
   const handleCashInOnclick = () => {
     setEnableBtn(false);
@@ -83,10 +82,8 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
 
   useEffect(() => {
     if (!playAnimationItem?.amountWinning) return;
-    setTimeout(() => {
-      setCount(_getAmount(+playAnimationItem.amountWinning));
-    }, 100);
-    // setCount(_getAmount(playAnimationItem.amountWinning));
+
+    setCount(_getAmount(+playAnimationItem.amountWinning));
   }, [playAnimationItem]);
 
   useEffect(() => {
@@ -152,8 +149,11 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
   return (
     <div className={classes.container}>
       <div level={playAnimationItem?.level} className={classes.animationBox}>
-        <div level={playAnimationItem?.level} className={classes.textAnimationBox}>
-          <TextAnimation machineNum={playAnimationItem.ip} />
+        <div
+          level={playAnimationItem?.level}
+          className={classes.textAnimationBox}
+        >
+          <TextAnimation machineNum={playAnimationItem?.ip} />
         </div>
         <div className={classes.winNumberBox} level={playAnimationItem?.level}>
           <span
@@ -166,8 +166,8 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
             $
           </span>
           <FlipNumber
-            size={playAnimationItem.level}
-            level={playAnimationItem.level}
+            size={playAnimationItem?.level}
+            level={playAnimationItem?.level}
             count={count}
             styles={{
               textShadow: '6px 10px 4px #000',
@@ -178,7 +178,8 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
           />
         </div>
 
-        <Firework level={playAnimationItem.level} />
+        <Firework level={playAnimationItem?.level} />
+
       </div>
 
       <div

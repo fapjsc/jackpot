@@ -23,34 +23,34 @@
     position: relative;
   }
 
-  .animationBox[level="jackpot"] {
+  .animationBox[level='jackpot'] {
     background-position: top;
     background-size: 100% 100%;
     background-image: url(../../assets/winPrizeAnimation/jackpot.gif);
     background-color: rgba(0, 0, 0, 0.15);
   }
 
-  .animationBox[level="secondPrize"] {
+  .animationBox[level='secondPrize'] {
     background-image: url(../../assets/winPrizeAnimation//secondPrize.gif);
     background-size: 100% 100%;
     background-position: 50% -100%;
   }
 
-  .animationBox[level="thirdPrize"] {
+  .animationBox[level='thirdPrize'] {
     background-image: url(../../assets/winPrizeAnimation/thirdPrize.gif);
     background-size: 60% 65%;
     background-position: 50% -10%;
   }
 
-  .animationBox[level="fourthPrize"] {
+  .animationBox[level='fourthPrize'] {
     background-image: url(../../assets/winPrizeAnimation/fourthPrize.gif);
     background-size: 60% 65%;
     background-position: 50% -10%;
     // background-color: green;
   }
 
-  .animationBox[level="fifthPrize"],
-  .animationBox[level="sixthPrize"] {
+  .animationBox[level='fifthPrize'],
+  .animationBox[level='sixthPrize'] {
     background-image: url(../../assets/winPrizeAnimation/otherPrize.gif);
     background-position: 50% 30%;
     background-size: 65%;
@@ -60,7 +60,7 @@
     display: flex;
     align-items: flex-stretch;
     justify-content: center;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(0,0,0, 0.5);
     border-radius: 10px;
     max-width: 100%;
     -webkit-box-shadow: 5px 5px 15px 5px #000000;
@@ -68,7 +68,7 @@
 
     position: absolute;
 
-    &[level="jackpot"] {
+    &[level='jackpot'] {
       color: #f70e06;
       bottom: 10%;
       background-color: rgba(255, 255, 255, 1);
@@ -76,32 +76,32 @@
       box-shadow: -5px -5px 30px 5px #f70e06, 5px 5px 30px 5px #f70e06;
     }
 
-    &[level="secondPrize"] {
+    &[level='secondPrize'] {
       color: #e93eee;
       bottom: 10%;
       background-color: rgba(255, 255, 255, 0.8);
       box-shadow: -5px -5px 30px 5px #e93eee, 5px 5px 30px 5px #e93eee;
     }
 
-    &[level="thirdPrize"] {
+    &[level='thirdPrize'] {
       color: #3881e0;
       bottom: 25%;
       box-shadow: 0 0 10px 5px #3881e0;
     }
 
-    &[level="fourthPrize"] {
+    &[level='fourthPrize'] {
       color: #39e743;
       bottom: 25%;
       box-shadow: 0 0 10px 5px #39e743;
     }
 
-    &[level="fifthPrize"] {
+    &[level='fifthPrize'] {
       color: #f2f3f4;
       bottom: 30%;
       box-shadow: 0 0 10px 5px #f2f3f4;
     }
 
-    &[level="sixthPrize"] {
+    &[level='sixthPrize'] {
       color: #f2f3f4;
       bottom: 30%;
       box-shadow: 0 0 10px 5px #f2f3f4;
@@ -172,26 +172,26 @@ $colors: (
   color: white;
 }
 
-.textAnimationBox[level="jackpot"] {
+.textAnimationBox[level='jackpot'] {
   top: 5%;
 }
 
-.textAnimationBox[level="secondPrize"] {
+.textAnimationBox[level='secondPrize'] {
   top: 5%;
 }
 
-.textAnimationBox[level="thirdPrize"] {
+.textAnimationBox[level='thirdPrize'] {
   bottom: -10%;
 }
 
-.textAnimationBox[level="fourthPrize"] {
+.textAnimationBox[level='fourthPrize'] {
   bottom: -10%;
 }
 
-.textAnimationBox[level="fifthPrize"] {
+.textAnimationBox[level='fifthPrize'] {
   bottom: -10%;
 }
 
-.textAnimationBox[level="sixthPrize"] {
+.textAnimationBox[level='sixthPrize'] {
   bottom: -10%;
 }

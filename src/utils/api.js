@@ -42,7 +42,7 @@ export const serviceCall = async (action) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       // ip: config.LOCAL_IP,
-      action: action,
+      action,
     }),
   });
 

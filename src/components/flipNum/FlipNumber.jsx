@@ -54,7 +54,6 @@ const FlipNumber = ({
   };
 
   useOdometer(targetRef, count, odometerOptions);
-  // useOdometer(targetRef, Number(count).toFixed(4) * 1 + 0.0001, odometerOptions);
 
   const color = _getLevelColor(level);
   let fontSize;

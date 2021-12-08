@@ -37,9 +37,7 @@ const App = () => {
 
   useEffect(() => {
     connectWithAgent();
-
     // testWinPrize();
-
     return () => {
       disconnectWithAgent();
     };
@@ -130,6 +128,7 @@ const App = () => {
 
     return () => {
       if (!jpAudio) return;
+
       if (jpAudioPromise !== undefined) {
         jpAudioPromise
           .then(() => {

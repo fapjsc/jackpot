@@ -14,7 +14,7 @@ import store from '../store/store';
 import {
   setJackpotData,
   setWinningPrizeData,
-  setHistory,
+  // setHistory,
   setWinRecordList,
   updateWinPrizeListCashInStatus,
   setShowToast,
@@ -71,7 +71,7 @@ export const connectWithAgent = () => {
         amountWinning: _getAmount(winPrizeData.amountWinning),
       }),
     );
-    store.dispatch(setHistory(winPrizeData));
+    // store.dispatch(setHistory(winPrizeData));
 
     if (store.getState().jackpot.displayWinPrize) {
       store.dispatch(setShowToast({ show: true, data: winPrizeData }));

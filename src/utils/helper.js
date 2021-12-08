@@ -70,10 +70,20 @@ export const _getLevelColor = (level) => {
   }
 };
 
+export const _getDecLength = (num) => {
+  if (!num) return;
+  return num.toString().split('.')[1].length;
+};
+
 export const _getAmount = (amount) => {
   if (!amount) return;
 
-  const amountNum = +(`${Math.round(`${amount + 0.0001}e+4`)}e-4`);
+  const amountNum = (amount.toFixed(3) + 1) * 1;
+
+  const validValueLength = _getDecLength(amountNum);
+
+  if (validValueLength !== 4) { console.log(amountNum); }
+
   return amountNum;
 };
 

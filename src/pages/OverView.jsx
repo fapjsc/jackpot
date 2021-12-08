@@ -50,7 +50,7 @@ const OverView = () => {
     }
   }, [displayWinPrize, dispatch]);
 
-  // 播放10秒後改變狀態
+  // 播放30秒後改變狀態
   useEffect(() => {
     if (!displayWinPrize) return;
 
@@ -58,7 +58,7 @@ const OverView = () => {
       setTimeout(() => {
         // console.log('playing Finishing');
         dispatch(setDisplayWinPrize('playingFinishing'));
-      }, 30000);
+      }, 20000);
     }
   }, [displayWinPrize, dispatch]);
 

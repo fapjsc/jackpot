@@ -18,11 +18,11 @@ import {
 const initialState = {
   jackpotData: null,
   winningPrize: [],
-  history: [],
   displayWinPrize: null,
   winRecordList: [],
   showToast: { show: false, data: null },
   serviceBell: [],
+  history: [],
 };
 
 const jackpotReducer = (state = initialState, action) => {

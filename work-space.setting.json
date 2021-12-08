@@ -1,0 +1,18 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+
+  "eslint.alwaysShowStatus": true,
+  "eslint.options": {
+    "extensions": [".html", ".js", ".jsx"]
+  },
+  "eslint.validate": ["html", "react", "javascript"],
+
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true,
+
+  "workbench.iconTheme": "material-icon-theme",
+
+  "cSpell.userWords": ["uuidv"]
+}
