@@ -43,7 +43,7 @@ const App = () => {
     };
   }, []);
 
-  // 背景音樂s
+  // 背景音樂
   useEffect(() => {
     let audio;
 

@@ -16,7 +16,7 @@ import {
   setWinningPrizeData,
   // setHistory,
   setWinRecordList,
-  updateWinPrizeListCashInStatus,
+  // updateWinPrizeListCashInStatus,
   setShowToast,
   setServiceBell,
 } from '../store/actions/jackpotActions';
@@ -90,15 +90,15 @@ export const connectWithAgent = () => {
     }
   });
 
-  socket.on('update-win-prize', (cashInStatusData) => {
-    // console.log(cashInStatusData);
-    const cashInStatus = {
-      id: cashInStatusData.id,
-      cashInStatus: cashInStatusData.cashInStatus,
-    };
+  // socket.on('update-win-prize', (cashInStatusData) => {
+  //   // console.log(cashInStatusData);
+  //   const cashInStatus = {
+  //     id: cashInStatusData.id,
+  //     cashInStatus: cashInStatusData.cashInStatus,
+  //   };
 
-    store.dispatch(updateWinPrizeListCashInStatus(cashInStatus));
-  });
+  //   store.dispatch(updateWinPrizeListCashInStatus(cashInStatus));
+  // });
 
   socket.on('serviceBell', (data) => {
     // console.log(data);

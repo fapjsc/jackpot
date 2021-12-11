@@ -74,10 +74,10 @@ const OverView = () => {
   // 結束動畫
   useEffect(() => {
     if (!displayWinPrize) return;
-    if (displayWinPrize?.cashInStatus === 'success' && displayWinPrize?.isPlayingAnimation === 'playingFinishing') {
+
+    if (displayWinPrize?.cashInStatus === 'success'
+    && displayWinPrize?.isPlayingAnimation === 'playingFinishing') {
       setWinPrize(false);
-      // dispatch(removeWinningData(displayWinPrize));
-      // dispatch(removeDisplayWinPrizeAnimation());
     }
   }, [displayWinPrize, dispatch]);
 

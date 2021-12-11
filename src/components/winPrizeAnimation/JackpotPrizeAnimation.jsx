@@ -41,8 +41,8 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
       amountWinning: 100,
       inserId: 1394,
       cashInStatus: 'padding',
-      // level: 'jackpot',
-      level: 'secondPrize',
+      level: 'jackpot',
+      // level: 'secondPrize',
       // level: 'thirdPrize',
       // level: 'fourthPrize',
       // level: 'fifthPrize',
@@ -52,7 +52,7 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
   }
   // Init State
   const [count, setCount] = useState(0);
-  const [enableBtn, setEnableBtn] = useState(true);
+  const [enableBtn, setEnableBtn] = useState(false);
 
   // Redux
   const dispatch = useDispatch();
@@ -70,11 +70,11 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
       insertId: playAnimationItem?.inserId,
     };
     sendRequest(data);
-
-    setTimeout(() => {
-      setEnableBtn(true);
-    }, 1000 * 10);
   };
+
+  useEffect(() => {
+    if (playAnimationItem?.cashInStatus === 'fail') setEnableBtn(true);
+  }, [playAnimationItem]);
 
   useEffect(() => {
     console.log(message, status, error);
@@ -135,12 +135,12 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
       return '派彩失敗, 再試一次';
     }
 
-    if (status === 'pending' || !enableBtn) {
-      return '請稍等...';
-    }
-
     if (playAnimationItem?.cashInStatus === 'success') {
       return '派彩成功';
+    }
+
+    if (status === 'pending' || !enableBtn) {
+      return '請稍等...';
     }
 
     return '手動派彩';
@@ -153,7 +153,7 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
           level={playAnimationItem?.level}
           className={classes.textAnimationBox}
         >
-          <TextAnimation machineNum={playAnimationItem?.ip} />
+          <TextAnimation machineNum={playAnimationItem?.name} />
         </div>
         <div className={classes.winNumberBox} level={playAnimationItem?.level}>
           <span
@@ -196,11 +196,12 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
 
         <button
           type="button"
-          disabled={
-            status === 'pending'
-            || !enableBtn
-            || playAnimationItem?.cashInStatus === 'success'
-          }
+          disabled={!enableBtn}
+          // disabled={
+          //   status === 'pending'
+          //   || !enableBtn
+          //   || playAnimationItem?.cashInStatus === 'success'
+          // }
           className={classes.raise}
           onClick={handleCashInOnclick}
         >
@@ -228,7 +229,7 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
 
 JackpotPrizeAnimation.propTypes = {
   playAnimationItem: PropTypes.shape({
-    ip: PropTypes.string,
+    name: PropTypes.string,
     id: PropTypes.string,
     cashInStatus: PropTypes.string,
     level: PropTypes.string,

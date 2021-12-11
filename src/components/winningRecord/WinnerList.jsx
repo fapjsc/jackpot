@@ -79,12 +79,13 @@ const WinnerList = () => {
       set([
         {
           id: uuidv4(),
-          ip: winRecordList[index].egm_ip,
           jackpot: winRecordList[index].jackpot,
           created: winRecordList[index].created,
           place: winRecordList[index].place,
           level: winRecordList[index].level,
-          num: index,
+          name: winRecordList[index].name,
+          // ip: winRecordList[index].egm_ip,
+          // num: index,
         },
         ...rows,
       ]);
@@ -124,17 +125,7 @@ const WinnerList = () => {
             width: '100%',
             padding: '1.5em',
             color: _getLevelColor(item.level),
-            // item.level === 'jackpot'
-            //   ? '#F70E06'
-            //   : item.level === 'secondPrize'
-            //   ? '#E93EEE'
-            //   : item.level === 'thirdPrize'
-            //   ? '#3881E0'
-            //   : item.level === 'fourthPrize'
-            //   ? '#39E743'
-            //   : item.level === 'fifthPrize'
-            //   ? '#F2F3F4'
-            //   : '#F2F3F4',
+
             ...rest,
           }}
         >
@@ -156,7 +147,7 @@ const WinnerList = () => {
               </div>
 
               <div style={{ ...styles, width: '20%' }}>
-                <p>{`${item.place}-${item.num}`}</p>
+                <p>{`${item.place}-${item.name}`}</p>
               </div>
 
               <div style={{ ...styles }}>
