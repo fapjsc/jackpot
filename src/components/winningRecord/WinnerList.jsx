@@ -47,7 +47,7 @@ const WinnerList = () => {
   const data = [];
   const [rows, set] = useState(data);
 
-  const height = 35;
+  const height = 28;
 
   const transitions = useTransition(
     rows.map((d, i) => ({ ...d, y: i * height })),
