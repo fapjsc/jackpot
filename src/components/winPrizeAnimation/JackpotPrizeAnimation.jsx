@@ -14,7 +14,7 @@ import { setShowToast } from '../../store/actions/jackpotActions';
 // Components
 import FlipNumber from '../flipNum/FlipNumber';
 import Firework from '../ui/Firework';
-import Space from '../ui/Space';
+// import Space from '../ui/Space';
 import TextAnimation from '../ui/TextAnimation';
 
 // Hooks
@@ -34,7 +34,8 @@ import {
 // Styles
 import classes from './JackpotAnimation.module.scss';
 
-const JackpotPrizeAnimation = ({ playAnimationItem }) => {
+// eslint-disable-next-line
+const JackpotPrizeAnimation = ({ playAnimationItem, setWinPrize }) => {
   if (!playAnimationItem) {
     playAnimationItem = {
       id: 123456789,
@@ -177,9 +178,7 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
             }}
           />
         </div>
-
         <Firework level={playAnimationItem?.level} />
-
       </div>
 
       <div
@@ -187,41 +186,25 @@ const JackpotPrizeAnimation = ({ playAnimationItem }) => {
           color: '#fff',
           position: 'fixed',
           bottom: 20,
-          right: 20,
+          width: '70%',
+          display: 'flex',
+          justifyContent: 'space-between',
+          padding: '0 1rem',
         }}
       >
-        {/* <p>{playAnimationItem?.ip}</p>
-        <p>{playAnimationItem?.level}</p>
-        <p>{playAnimationItem?.amountWinning}</p> */}
+
+        <button type="button" className={classes.raise} onClick={() => setWinPrize(false)}>
+          強制關閉
+        </button>
 
         <button
           type="button"
           disabled={!enableBtn}
-          // disabled={
-          //   status === 'pending'
-          //   || !enableBtn
-          //   || playAnimationItem?.cashInStatus === 'success'
-          // }
           className={classes.raise}
           onClick={handleCashInOnclick}
         >
           {buttonTxt()}
         </button>
-
-        <br />
-
-        <Space>
-          <p>{playAnimationItem?.cashInStatus}</p>
-          <p>
-            {String(playAnimationItem?.id).substring(
-              String(playAnimationItem?.id).length - 5,
-            )}
-          </p>
-        </Space>
-
-        {/* <button className={classes.raise} onClick={() => setWinPrize(false)}>
-          強制關閉
-        </button> */}
       </div>
     </div>
   );
